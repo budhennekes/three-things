@@ -10,6 +10,15 @@ function formatArchive(data) {
         const parts = row.text.split('\n');
         lines.push(`[${row.done ? 'x' : ' '}] ${i+1}. ${parts[0]}`, ...parts.slice(1).map(part => '       ' + part));
       }
+      const scope = field === 'months' ? 'month' : field === 'weeks' ? 'week' : 'day';
+      const extras = data.completion?.[`${scope}:${key}`]?.extras || [];
+      if (extras.some(row=>row.text.trim())) {
+        lines.push('OPTIONAL EXTRA TASKS');
+        for (const row of extras.filter(row=>row.text.trim())) {
+          const [first,...rest] = row.text.split('\n');
+          lines.push(`[${row.done ? 'x' : ' '}] ${first}`,...rest.map(line=>'    '+line));
+        }
+      }
       lines.push('');
     }
     if (!keys.length) lines.push('No saved priorities.', '');

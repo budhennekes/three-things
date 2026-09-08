@@ -1,18 +1,142 @@
 [
-  {"name":"graphite","label":"Graphite","background":"#242422","kind":"material","tone":"dark"},
-  {"name":"dunes","label":"Dunes","background":"#242422","kind":"photo","tone":"dark"},
-  {"name":"meadow","label":"Meadow","background":"#242422","kind":"photo","tone":"dark"},
-  {"name":"olive-grove","label":"Olive Grove","background":"#242422","kind":"photo","tone":"dark"},
-  {"name":"poolside","label":"Poolside","background":"#242422","kind":"photo","tone":"dark"},
-  {"name":"stillwater","label":"Stillwater","background":"#242422","kind":"photo","tone":"dark"},
-  {"name":"horizon","label":"Horizon","background":"#242422","kind":"photo","tone":"dark"},
-  {"name":"sunroom","label":"Sunroom","background":"#242422","kind":"photo","tone":"dark"},
-  {"name":"alpine","label":"Alpine","background":"#242422","kind":"photo","tone":"dark"},
-  {"name":"open-road","label":"Open Road","background":"#242422","kind":"photo","tone":"dark"},
-  {"name":"snowfield","label":"Snowfield","background":"#f3f1ed","kind":"photo","tone":"light"},
-  {"name":"mist","label":"Mist","background":"#f3f1ed","kind":"photo","tone":"light"},
-  {"name":"linen","label":"Linen","background":"#f3f1ed","kind":"photo","tone":"light"},
-  {"name":"ripples","label":"Ripples","background":"#242422","kind":"photo","tone":"dark"},
-  {"name":"plaster","label":"Plaster","background":"#f3f1ed","kind":"photo","tone":"light"},
-  {"name":"shore","label":"Shore","background":"#f3f1ed","kind":"photo","tone":"light"}
+  {
+    "name": "graphite",
+    "label": "Graphite",
+    "background": "#242422",
+    "kind": "material",
+    "tone": "dark"
+  },
+  {
+    "name": "cream",
+    "label": "Cream",
+    "background": "#f5efe3",
+    "kind": "color",
+    "tone": "light"
+  },
+  {
+    "name": "sage",
+    "label": "Sage",
+    "background": "#d8e2d2",
+    "kind": "color",
+    "tone": "light"
+  },
+  {
+    "name": "blue",
+    "label": "Blue",
+    "background": "#d7e5ef",
+    "kind": "color",
+    "tone": "light"
+  },
+  {
+    "name": "dunes",
+    "label": "Dunes",
+    "background": "#242422",
+    "kind": "photo",
+    "tone": "dark"
+  },
+  {
+    "name": "meadow",
+    "label": "Meadow",
+    "background": "#242422",
+    "kind": "photo",
+    "tone": "dark"
+  },
+  {
+    "name": "olive-grove",
+    "label": "Olive Grove",
+    "background": "#242422",
+    "kind": "photo",
+    "tone": "dark"
+  },
+  {
+    "name": "poolside",
+    "label": "Poolside",
+    "background": "#242422",
+    "kind": "photo",
+    "tone": "dark"
+  },
+  {
+    "name": "stillwater",
+    "label": "Stillwater",
+    "background": "#242422",
+    "kind": "photo",
+    "tone": "dark"
+  },
+  {
+    "name": "horizon",
+    "label": "Horizon",
+    "background": "#242422",
+    "kind": "photo",
+    "tone": "dark"
+  },
+  {
+    "name": "sunroom",
+    "label": "Sunroom",
+    "background": "#242422",
+    "kind": "photo",
+    "tone": "dark"
+  },
+  {
+    "name": "alpine",
+    "label": "Alpine",
+    "background": "#242422",
+    "kind": "photo",
+    "tone": "dark"
+  },
+  {
+    "name": "open-road",
+    "label": "Open Road",
+    "background": "#242422",
+    "kind": "photo",
+    "tone": "dark"
+  },
+  {
+    "name": "snowfield",
+    "label": "Snowfield",
+    "background": "#f3f1ed",
+    "kind": "photo",
+    "tone": "light"
+  },
+  {
+    "name": "mist",
+    "label": "Mist",
+    "background": "#f3f1ed",
+    "kind": "photo",
+    "tone": "light"
+  },
+  {
+    "name": "linen",
+    "label": "Linen",
+    "background": "#f3f1ed",
+    "kind": "photo",
+    "tone": "light"
+  },
+  {
+    "name": "ripples",
+    "label": "Ripples",
+    "background": "#242422",
+    "kind": "photo",
+    "tone": "dark"
+  },
+  {
+    "name": "plaster",
+    "label": "Plaster",
+    "background": "#f3f1ed",
+    "kind": "photo",
+    "tone": "light"
+  },
+  {
+    "name": "shore",
+    "label": "Shore",
+    "background": "#f3f1ed",
+    "kind": "photo",
+    "tone": "light"
+  },
+  {
+    "name": "summer-meadow",
+    "label": "Summer Meadow",
+    "background": "#d6e8ae",
+    "kind": "illustration",
+    "tone": "light"
+  }
 ]

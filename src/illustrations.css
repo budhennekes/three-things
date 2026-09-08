@@ -1,0 +1,4 @@
+/* Original painted backgrounds. Native source images are not pre-upscaled. */
+:root[data-skin='summer-meadow'] { color-scheme:only light; --ink:#d6e8ae; --glow:#d6e8ae; --text:#192716; --muted:#192716; --peach:#192716; --done-text:#192716; --hover:#192716; --line:#19271635; --focus:#192716aa; --focus-fill:#ffffff30; --error:#572817; --retry-border:#19271688; --retry-hover:#19271615; --warm:#50622e; --pencil:url('../assets/pencil-neutral.svg'); }
+:root[data-skin='summer-meadow'] { --painting:url('../assets/illustrations/summer-meadow.webp'); }
+:root[data-skin='summer-meadow'] .app { background-image:linear-gradient(#f5f7df66,#f5f7df66),var(--painting); background-position:center; background-size:cover; background-repeat:no-repeat; }

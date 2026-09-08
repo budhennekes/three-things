@@ -1,58 +1,72 @@
 # Three Things
 
-**Make a few decisions once. Keep them close.**
+**A little space for what matters.**
 
-Three Things is a small Mac desktop app for the priorities that deserve to stay in view. It has three spaces and three lines in each:
+Three Things is a small Mac app for choosing three priorities, keeping them in sight, and getting on with your day. There are separate lists for **Today**, **This week**, and **This month**. Three main things in each. No inbox, projects, or streaks to maintain.
 
-- **Today** for what needs your attention now.
-- **This week** for the work that should not get lost in the days.
-- **This month** for the bigger thing worth protecting.
+## Download for Mac
 
-That is the product. No inbox, streaks, scores, or project system.
+**[Download Three Things 0.10.0 →](https://github.com/budhennekes/three-things/releases/download/v0.10.0/ThreeThings-0.10.0-mac-arm64.zip)**
 
-## Why it exists
+Free, open source, and built for **Apple Silicon Macs (M1 or later), macOS 13 or later**. This download does not support Intel Macs, Windows, or Linux.
 
-Most task apps reward collecting more work. Three Things makes a small constraint feel useful: decide what matters, keep it visible, and cross it off when it is real.
+**Early release:** This build is ad-hoc signed, not signed with an Apple Developer ID or notarized by Apple. macOS may block the first launch. Read the opening instructions below before downloading.
 
-Use the full list when you are choosing. Use Focus for one item at a time. Use Mini to keep all three priorities in a slim horizontal bar on your desktop.
+[See the app](https://budhennekes.github.io/three-things/) · [Release notes and checksum](https://github.com/budhennekes/three-things/releases/tag/v0.10.0)
 
-## A little extra, without a dashboard
+![Three Things in full-screen Focus, with sample priorities](docs/images/focus.webp)
 
-- Priorities save locally on your Mac.
-- Completed lines remain editable, so a typo does not undo an accomplishment.
-- Pick a quiet photo or Graphite background.
-- Export a plain-text copy from **File → Export Priorities**.
-- Turn on **Always on Top** from Settings when you want it close.
+## Why I made it
 
-## Run it locally
+I wanted a small place to keep the few things I actually meant to do. Not another system to organize, and not a longer list to feel behind on.
+
+So I made Three Things. Choose a few priorities. Keep them close. Give one your attention. When they are done, let that count.
+
+— Bud
+
+## Small on purpose
+
+- **List, Focus, and Compact.** See all three, give one task the screen, or keep a slim three-task bar nearby.
+- **Room to focus.** Use the green Mac window button or **Control–Command–F** for native full screen. List stays in a readable column; Focus gives one priority more space. Escape exits.
+- **Yesterday and tomorrow, without a calendar.** Use the arrows beside the date to review a previous day or plan ahead. **Back to today** returns you to now. Each date keeps its own tasks and completion status. Tomorrow’s saved plan becomes Today when the date changes.
+- **A quiet finish.** Complete your three for a small “Well done.” Add optional tasks with **One more thing** if you want to keep going.
+- **A fresh start.** **Clear today** clears only the current day. Undo stays available on that day, even after reopening, until you begin a replacement list.
+- **Your choice of background.** Plain colors, quiet photographs, and an illustrated meadow. All bundled locally.
+- **Local saving and text export.** No account needed. Use **File → Export Priorities** for a readable copy of your saved days, weeks, months, and extras.
+
+## Install and open
+
+1. Download the ZIP and double-click it to extract **Three Things.app**.
+2. Move the app to **Applications**, then open it.
+3. If macOS blocks it because the developer cannot be verified, open **System Settings → Privacy & Security**. Find the notice for Three Things and choose **Open Anyway**, then confirm **Open**. Only do this if you trust this download and its source.
+
+[Apple’s instructions for opening apps from outside the App Store](https://support.apple.com/en-us/102445)
+
+Do not disable Gatekeeper or other system-wide protections. If macOS reports malware or says the app will damage your computer, do not bypass that warning. This project has not been reviewed or notarized by Apple.
+
+To update, quit Three Things before replacing the app in Applications. Updates are manual; the app does not download them automatically.
+
+## Privacy and saved work
+
+Priorities stay on your Mac unless you choose to export or share them. The app has no account, cloud sync, task-data upload, or analytics. Backgrounds work offline.
+
+Local does not mean encrypted or backed up. The app stores plain JSON in `~/Library/Application Support/Three Things Local Test/` (a legacy folder name retained to preserve existing users’ data). Back up that folder while the app is closed if you want a restorable copy. Text export is for reading, not importing back into the app.
+
+## Development
 
 Requires Node.js 22+ and macOS.
 
 ```sh
-npm install
+npm ci
 npm start
-```
-
-Create a local Apple Silicon build:
-
-```sh
+npm test
+npm run test:ui
+npm run test:fullscreen
 npm run package:mac
 ```
 
-The packaged ZIP appears in `dist/`. This prototype is not signed, notarized, or App Store ready yet.
+UI tests use synthetic, isolated data. `test:fullscreen` changes native macOS Spaces; run it when the desktop is free. The Apple Silicon ZIP is created in `dist/`. Packaging uses an ad-hoc signature and does not notarize the app.
 
-## Privacy
+## Credits and license
 
-Your priorities stay in the app's local data folder unless you choose to export them. The bundled backgrounds work offline. The app does not require an account or send task data to a service.
-
-## Development
-
-```sh
-npm test
-```
-
-Photographic sources and licenses are recorded in `assets/PHOTO-CREDITS-v5.md` and `assets/photo-sources-v6.json`.
-
-## License
-
-MIT. See [LICENSE](LICENSE).
+Code: [MIT](LICENSE). Fonts, icons, photographs, and artwork retain their own terms; see the license files in `assets/`, [photo credits](assets/PHOTO-CREDITS-v5.md), and [photo sources](assets/photo-sources-v6.json).

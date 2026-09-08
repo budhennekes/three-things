@@ -4,3 +4,12 @@ dist/
 *.log
 .env
 coverage/
+evidence-v09/
+dist-v09/
+evidence-v091/
+dist-v091/
+evidence-v092/
+dist-v092/
+evidence-v010/
+dist-v010/
+dist-v010-final/

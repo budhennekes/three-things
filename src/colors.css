@@ -1,0 +1,12 @@
+/* Plain colors: no photo, grain, gradient, or change to task geometry. */
+:root:is([data-skin='cream'],[data-skin='sage'],[data-skin='blue']) {
+  color-scheme:only light; --hover:var(--text); --done-text:var(--muted);
+  --line:color-mix(in srgb,var(--text) 20%,transparent); --strike:var(--peach);
+  --focus:var(--peach); --focus-fill:#ffffff35; --error:#7a2f26;
+  --retry-border:var(--peach); --retry-hover:#ffffff35; --warm:var(--peach);
+  --pencil:url('../assets/pencil-neutral.svg'); --material:none;
+}
+:root[data-skin='cream'] { --ink:#f5efe3; --glow:#f5efe3; --text:#302b24; --muted:#635b50; --peach:#765736; }
+:root[data-skin='sage'] { --ink:#d8e2d2; --glow:#d8e2d2; --text:#263329; --muted:#50604e; --peach:#466450; }
+:root[data-skin='blue'] { --ink:#d7e5ef; --glow:#d7e5ef; --text:#223747; --muted:#4a5e70; --peach:#375c76; }
+:root:is([data-skin='cream'],[data-skin='sage'],[data-skin='blue']) .app { background:var(--ink); }

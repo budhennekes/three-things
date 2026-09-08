@@ -41,4 +41,5 @@ test('the shipped catalog excludes rejected backgrounds and includes grass scene
   assert(!names.has('cloudbank'));
   assert(names.has('meadow'));
   assert(names.has('olive-grove'));
+  assert.deepEqual(catalog.filter(item=>item.kind==='illustration').map(item=>item.name),['summer-meadow']);
 });

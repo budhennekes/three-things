@@ -1,8 +1,8 @@
 const fs = require('node:fs');
 const MODES = {
-  list: { width: 390, height: 376, minWidth: 320, minHeight: 340, maxWidth: 900, maxHeight: 950 },
-  focus: { width: 390, height: 310, minWidth: 320, minHeight: 270, maxWidth: 900, maxHeight: 950 },
-  compact: { width: 680, height: 98, minWidth: 600, minHeight: 98, maxWidth: 1100, maxHeight: 98 },
+  list: { width: 390, height: 440, minWidth: 320, minHeight: 390, maxWidth: 900, maxHeight: 950 },
+  focus: { width: 390, height: 390, minWidth: 320, minHeight: 370, maxWidth: 900, maxHeight: 950 },
+  compact: { width: 760, height: 98, minWidth: 600, minHeight: 98, maxWidth: 1100, maxHeight: 98 },
 };
 function validBounds(bounds) {
   return bounds && ['x', 'y', 'width', 'height'].every(k => Number.isFinite(bounds[k])) && bounds.width > 0 && bounds.height > 0;

@@ -4,13 +4,16 @@ const appElement = document.querySelector('.app');
 const tabs = [...document.querySelectorAll('[role=tab]')];
 let scope = 'day', key, rows, revision = 0, savedRevision = 0;
 let savePromise = null, switching = false, loaded = false, rolloverBusy = false;
-const celebrated = new Set();
-let retryScope = null;
-let mode = 'list', focusedIndex = 0, requestedFocus = null;
+let extras = [], completedOnce = false, savedAllComplete = false, finishTimer;
+let retryScope = null, actionGeneration = 0;
+let mode = 'list', focusedIndex = 0, requestedFocus = null, fullScreen = false;
 let autoAdvance = false, advanceCandidate = null, advanceTimer;
 function cancelAdvance() { clearTimeout(advanceTimer); advanceCandidate = null; }
 function applyPreferences(state) {
-  autoAdvance = !!state.autoAdvance;
+  fullScreen = !!state.fullScreen; document.documentElement.dataset.fullscreen = String(fullScreen);
+  document.querySelector('#exit-fullscreen').hidden = !fullScreen;
+  document.querySelector('#exit-fullscreen').disabled = !!state.fullscreenBusy;
+  autoAdvance = false; // All three tasks remain visible in Mini; no automatic navigation.
   document.documentElement.dataset.backdrop = state.backdrop || 'opaque';
   if (!autoAdvance) cancelAdvance();
 }
@@ -57,7 +60,7 @@ function periodLabel(value) {
 }
 function render() {
   appElement.classList.remove('celebrate');
-  document.querySelector('#date').textContent = periodLabel(key);
+  updateDayNavigation();
   tabs.forEach(tab => {
     const selected = tab.dataset.scope === scope;
     tab.setAttribute('aria-selected', String(selected));
@@ -97,6 +100,7 @@ function render() {
     const inkText = document.createElement('span'); inkText.textContent = row.text; ink.append(inkText);
     text.addEventListener('input', () => {
       row.text = text.value; inkText.textContent = row.text;
+      if (!row.text.trim() && row.done) { row.done = false; check.checked = false; completionLabel.textContent = 'Mark done'; check.title = 'Mark as done'; li.classList.remove('just-checked'); }
       check.disabled = !row.text.trim(); changed();
     });
     text.addEventListener('focus', () => li.classList.add('editing'));
@@ -104,7 +108,7 @@ function render() {
     text.addEventListener('keydown', event => {
       if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
         event.preventDefault();
-        if (mode !== 'list') { text.blur(); return; }
+        if (row.done || mode !== 'list') { text.blur(); return; }
         const next = list.querySelectorAll('textarea')[i + 1];
         if (next) next.focus(); else text.blur();
       }
@@ -119,18 +123,20 @@ function render() {
       if (row.done) setTimeout(() => li.classList.remove('just-checked'), 500);
       changed();
     });
-    textWrap.addEventListener('click', () => { if (mode === 'compact') void requestMode('focus'); });
-    textWrap.addEventListener('keydown', event => { if (mode === 'compact' && ['Enter',' '].includes(event.key)) { event.preventDefault(); void requestMode('focus'); } });
+    textWrap.addEventListener('click', () => { if (mode === 'compact') void focusPriority(i); });
+    textWrap.addEventListener('keydown', event => { if (mode === 'compact' && ['Enter',' '].includes(event.key)) { event.preventDefault(); void focusPriority(i); } });
     textWrap.append(text, ink); li.append(number, textWrap, wrap); list.append(li);
   });
   refresh();
 }
 function refresh() {
   const count = rows.filter(row => row.done).length;
-  appElement.classList.toggle('finished', count === 3);
-  document.querySelector('#progress-text').textContent = `${count} of 3 ${{day:'daily',week:'weekly',month:'monthly'}[scope]} priorities complete.`;
+  appElement.classList.toggle('finished', count === 3 && savedAllComplete);
+  const progressText = `${count} of 3 ${{day:'daily',week:'weekly',month:'monthly'}[scope]} priorities complete.`;
+  if (document.querySelector('#progress-text').textContent !== progressText) document.querySelector('#progress-text').textContent = progressText;
   if (count !== 3) appElement.classList.remove('celebrate');
   applyModeLayout();
+  updateFinish(); updateDayActions();
 }
 function applyModeLayout() {
   document.documentElement.dataset.mode = mode;
@@ -141,10 +147,10 @@ function applyModeLayout() {
   document.querySelector('#expand').hidden = mode !== 'compact';
   document.querySelector('#compact-tools').hidden = mode !== 'compact';
   document.querySelector('#focus-navigation').hidden = mode !== 'focus';
-  document.querySelector('#compact-period').textContent = {day:'Today',week:'This week',month:'This month'}[scope];
+  document.querySelector('#compact-period').textContent = {day:dayName(),week:'This week',month:'This month'}[scope];
   document.querySelector('#position').textContent = `${focusedIndex + 1} / 3`;
   document.querySelector('#next-unfinished').hidden = mode !== 'focus' || !rows[focusedIndex].done || !rows.some(row => !row.done && row.text.trim());
-  document.querySelector('#all-complete').hidden = mode !== 'focus' || !rows.every(row => row.done);
+  document.querySelector('#all-complete').hidden = true;
   document.querySelector('#previous').disabled = switching || focusedIndex === 0;
   document.querySelector('#next').disabled = switching || focusedIndex === 2;
   list.querySelectorAll('.priority').forEach((li, i) => {
@@ -191,16 +197,18 @@ function stepPriority(delta) {
 document.querySelectorAll('.settings-trigger').forEach(button => button.addEventListener('click', () => { cancelAdvance(); void api.settings().catch(() => showNotice('Could not open Settings. Use Three Things → Settings.')); }));
 document.querySelector('#focus-toggle').addEventListener('click', () => { void requestMode(mode === 'focus' ? 'list' : 'focus'); });
 document.querySelector('#compact-toggle').addEventListener('click', () => { void requestMode('compact'); });
+document.querySelector('#exit-fullscreen').addEventListener('click',()=>{void api.fullscreen(false).catch(()=>showNotice('Could not exit full screen. Try View → Exit Full Screen.'));});
 document.querySelector('#expand').addEventListener('click', () => { void requestMode('expand'); });
 document.querySelector('#previous').addEventListener('click', () => stepPriority(-1));
 document.querySelector('#next').addEventListener('click', () => stepPriority(1));
 document.querySelector('#next-unfinished').addEventListener('click', () => { const next = [1,2].map(delta => (focusedIndex + delta) % 3).find(i => !rows[i].done && rows[i].text.trim()); if (next !== undefined) stepPriority(next - focusedIndex); });
 document.querySelector('#compact-period').addEventListener('click', () => { void switchScope(['day','week','month'][(['day','week','month'].indexOf(scope)+1)%3]); });
 window.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && fullScreen) { event.preventDefault(); void api.fullscreen(false).catch(()=>showNotice('Could not exit full screen. Try View → Exit Full Screen.')); return; }
   if (event.key === 'Escape' && mode !== 'list') { event.preventDefault(); void requestMode(mode === 'compact' ? 'expand' : 'list'); }
 });
 
-function changed() { revision++; refresh(); void flush(); }
+function changed() { revision++; retryDayAction = null; refresh(); void flush(); }
 function showError(message) {
   if (mode === 'compact') void requestMode('focus');
   document.querySelector('#error').hidden = false;
@@ -211,21 +219,21 @@ function flush() {
   if (savePromise) return savePromise;
   if (savedRevision === revision) return Promise.resolve(true);
   document.querySelector('#save-state').textContent = 'Saving…';
+  let justCompleted = false;
   savePromise = (async () => {
     try {
       while (savedRevision < revision) {
         const current = revision;
-        const result = await api.save({ scope, key, rows: rows.map(row => ({ ...row })) });
+        const result = await api.save({ scope, key, rows: rows.map(row => ({ ...row })), extras: extras.map(row=>({...row})) });
         if (!result.ok) throw new Error(result.error);
         savedRevision = current;
+        completedOnce = result.completedOnce; savedAllComplete = result.allComplete; canUndoToday = !!result.canUndoToday;
+        justCompleted = justCompleted || result.justCompleted;
       }
       document.querySelector('#error').hidden = true;
       document.querySelector('#save-state').textContent = 'Saved on this Mac';
-      const identity = `${scope}:${key}`;
-      if (rows.every(row => row.done) && !celebrated.has(identity)) {
-        celebrated.add(identity); if (!reducedMotion.matches && !document.hidden) appElement.classList.add('celebrate');
-        setTimeout(() => appElement.classList.remove('celebrate'), 1100);
-      }
+      refresh();
+      if (justCompleted && rows.every(row=>row.done)) finishMoment();
       scheduleNext();
       return true;
     } catch (error) {
@@ -236,44 +244,51 @@ function flush() {
   return savePromise;
 }
 function setBusy(value) {
-  switching = value; list.inert = value;
+  if (value) actionGeneration++;
+  switching = value; list.inert = value; document.querySelector('#finish').inert = value; document.querySelector('#day-actions').inert = value;
   document.querySelector('#priority-panel').setAttribute('aria-busy', String(value));
   tabs.forEach(tab => { tab.disabled = value; });
   document.querySelector('#compact-period').disabled = value;
-  if (rows) applyModeLayout();
+  if (rows) { applyModeLayout(); updateFinish(); updateDayActions(); updateDayNavigation(); }
 }
 function adopt(state) {
+  actionGeneration++;
   cancelAdvance(); applyPreferences(state);
   document.documentElement.dataset.skin = state.skin || 'graphite';
-  retryScope = null;
-  scope = state.scope; key = state.key; rows = state.rows;
+  retryScope = null; retryDayAction = null; canUndoToday = !!state.canUndoToday;
+  scope = state.scope; key = state.key; rows = state.rows; todayKey = state.todayKey;
+  extras = state.extras || []; completedOnce = !!state.completedOnce; savedAllComplete = rows.every(row=>row.done);
+  clearTimeout(finishTimer);
   focusedIndex = Math.max(0, rows.findIndex(row => !row.done));
   if (!loaded) mode = state.mode || 'list';
   revision = 0; savedRevision = 0;
-  if (rows.every(row => row.done)) celebrated.add(`${scope}:${key}`);
+
   document.querySelector('#error').hidden = true;
   document.querySelector('#save-state').textContent = 'Saved on this Mac';
-  render();
+  render(); renderExtras();
 }
 async function switchScope(next) {
   cancelAdvance();
+  if (next === 'day' && scope === 'day' && browsingDay) return changeDay(null);
   if (!loaded || switching || next === scope) return;
   setBusy(true);
   try {
     if (!await flush()) return;
-    adopt(await api.load(next));
+    const state = await api.load(next); browsingDay = null; adopt(state);
   } catch { retryScope = next; showError('Could not open these priorities. Your current list is still here. Try again.'); }
   finally { setBusy(false); }
 }
 async function rollover() {
   if (!loaded || switching || rolloverBusy || savePromise) return;
   rolloverBusy = true;
-  const previousScope = scope, previousKey = key, previousRevision = revision;
+  const previousScope = scope, previousKey = key, previousRevision = revision, generation = actionGeneration;
   try {
     if (savedRevision !== revision) return;
-    const state = await api.load(scope);
-    if (switching || scope !== previousScope || key !== previousKey || revision !== previousRevision || savePromise) return;
-    if (state.key !== key) adopt(state);
+    const state = await api.load(scope, scope === 'day' ? browsingDay : null);
+    if (actionGeneration !== generation || switching || scope !== previousScope || key !== previousKey || revision !== previousRevision || savePromise) return;
+    todayKey = state.todayKey;
+    if (browsingDay === todayKey) browsingDay = null;
+    if (state.key !== key) adopt(state); else { updateDayNavigation(); updateDayActions(); }
   } catch { /* Keep the current list when a background check fails. */ }
   finally { rolloverBusy = false; }
 }
@@ -288,10 +303,11 @@ tabs.forEach((tab, index) => {
   });
 });
 document.querySelector('#retry').addEventListener('click', () => {
-  if (retryScope) void switchScope(retryScope); else void flush();
+  if (retryDayAction) void changeToday(retryDayAction);
+  else if (retryScope) void switchScope(retryScope); else void flush();
 });
 window.addEventListener('beforeunload', event => {
-  if (savedRevision !== revision) { event.preventDefault(); event.returnValue = ''; void flush(); }
+  if (switching || savedRevision !== revision) { event.preventDefault(); event.returnValue = ''; void flush(); }
 });
 window.addEventListener('focus', rollover);
 setInterval(rollover, 15000);

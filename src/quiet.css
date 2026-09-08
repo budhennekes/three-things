@@ -7,7 +7,6 @@
 :root[data-skin='meadow'] .app {background-image:linear-gradient(90deg,#19201ac4,#19201ab8),var(--photo);}
 
 .periods { gap:clamp(12px, 3vw, 24px); flex-wrap:wrap; }
-@media(max-width:320px) { .titlebar { height:auto; min-height:62px; padding:30px 10px 0; } .window-actions { flex-wrap:wrap; gap:2px; } }
 .periods button { font-size:clamp(1.35rem, 5.2vw, 2rem); }
 .periods button[aria-selected='true'] { text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:7px; }
 #quick-tip { position:fixed; z-index:10; top:45px; right:16px; width:min(290px, calc(100vw - 32px)); padding:14px 16px; border:1px solid var(--line); border-radius:8px; background:var(--ink); color:var(--muted); box-shadow:0 6px 24px #00000020; font-size:12px; line-height:1.5; -webkit-app-region:no-drag; }
@@ -33,6 +32,7 @@
 
 .settings-trigger {font-size:17px!important;line-height:1;width:28px;height:28px;padding:0!important;border-radius:4px;-webkit-app-region:no-drag;color:var(--muted)}
 .settings-trigger:hover{color:var(--text);background:var(--focus-fill)}
+:root[data-skin='poolside'] .settings-trigger { color:var(--text); }
 :root[data-mode='compact'] main{grid-template-columns:minmax(0,1fr) auto auto;grid-template-rows:24px 30px;gap:5px 10px;padding:11px 16px}
 :root[data-mode='compact'] #compact-period{grid-row:1;grid-column:1}
 :root[data-mode='compact'] #focus-navigation{grid-row:1;grid-column:2;gap:2px;align-self:center}
@@ -46,7 +46,7 @@
 :root[data-mode='compact'] #compact-tools { grid-column:2; grid-row:1; }
 :root[data-mode='compact'] #priority-panel { grid-column:1/-1; grid-row:2; }
 :root[data-mode='compact'] #priorities { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
-:root[data-mode='compact'] .priority { display:grid; grid-template-columns:24px minmax(0,1fr); align-items:center; gap:7px; min-width:0; padding:0; }
+:root[data-mode='compact'] .priority { display:grid; grid-template-columns:minmax(0,1fr) 28px; align-items:center; gap:7px; min-width:0; padding:0; }
 :root[data-mode='compact'] .priority + .priority { border-left:1px solid var(--line); padding-left:14px; }
 :root[data-mode='compact'] .priority > .number { display:none; }
 :root[data-mode='compact'] .check-wrap { width:24px; height:24px; padding:3px; }
@@ -60,7 +60,7 @@
 :root[data-skin='olive-grove'] { --photo:url('../assets/photos/olive-grove.webp'); --photo-position:center 64%; }
 :root[data-skin='poolside'] { --photo:url('../assets/photos/poolside.webp'); --photo-position:center 50%; }
 :root[data-skin='stillwater'] { --photo:url('../assets/photos/stillwater.webp'); --photo-position:center 50%; }
-:root:is([data-skin='meadow'],[data-skin='olive-grove']) { color-scheme:only light; --text:#183024; --muted:#254332; --peach:#183024; --done-text:#355545; --hover:#183024; --line:#18302430; --focus:#18302488; --focus-fill:#ffffffe0; --error:#6b271f; --retry-border:#18302488; --retry-hover:#18302412; --warm:#745433; --pencil:url('../assets/pencil-neutral.svg'); }
+:root:is([data-skin='meadow'],[data-skin='olive-grove']) { color-scheme:only light; --text:#183024; --muted:#183024; --peach:#183024; --done-text:#183024; --hover:#183024; --line:#18302430; --focus:#18302488; --focus-fill:#ffffffe0; --error:#6b271f; --retry-border:#18302488; --retry-hover:#18302412; --warm:#745433; --pencil:url('../assets/pencil-neutral.svg'); }
 :root:is([data-skin='meadow'],[data-skin='olive-grove']) .app { background-image:linear-gradient(90deg,#fff9e5c9,#fff9e59e),var(--photo); background-size:cover; background-position:center,var(--photo-position); background-repeat:no-repeat; }
-:root:is([data-skin='poolside'],[data-skin='stillwater']) { color-scheme:only dark; --text:#fff7e7; --muted:#f4ead7; --peach:#fff1c9; --done-text:#e7ddcc; --hover:#fff7e7; --line:#fff7e730; --focus:#fff1c999; --focus-fill:#ffffff0e; --error:#fff7e7; --retry-border:#fff1c988; --retry-hover:#fff1c918; --warm:#fff8e9; --pencil:url('../assets/pencil-photo.svg'); }
+:root:is([data-skin='poolside'],[data-skin='stillwater']) { color-scheme:only dark; --text:#fff7e7; --muted:#f4ead7; --peach:#fff1c9; --done-text:#fff7e7; --hover:#fff7e7; --line:#fff7e730; --focus:#fff1c999; --focus-fill:#ffffff0e; --error:#fff7e7; --retry-border:#fff1c988; --retry-hover:#fff1c918; --warm:#fff8e9; --pencil:url('../assets/pencil-photo.svg'); }
 :root:is([data-skin='poolside'],[data-skin='stillwater']) .app { background-image:linear-gradient(90deg,#14201bba,#14201b90),var(--photo); background-size:cover; background-position:center,var(--photo-position); background-repeat:no-repeat; }

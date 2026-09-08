@@ -1,7 +1,7 @@
 {
   "name": "three-things",
   "productName": "Three Things",
-  "version": "0.8.0",
+  "version": "0.10.0",
   "private": true,
   "description": "A small desktop home for today, this week, and this month.",
   "main": "src/desktop-main.cjs",
@@ -10,17 +10,40 @@
   "scripts": {
     "start": "electron .",
     "test": "node --test test/*.test.cjs",
-    "package:mac": "electron-builder --mac zip"
+    "test:ui": "node test/ui-pass.cjs && node test/continuation.cjs && node test/clear-today.cjs && node test/day-navigation.cjs",
+    "package:mac": "electron-builder --mac zip",
+    "test:fullscreen": "node test/fullscreen.cjs"
   },
   "build": {
     "appId": "com.budhennekes.threethings",
     "productName": "Three Things",
     "asar": true,
-    "files": ["src/**/*", "assets/**/*", "package.json", "README.md", "LICENSE"],
-    "mac": {"target": ["zip"], "category": "public.app-category.productivity", "icon": "assets/icon.icns"}
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json",
+      "README.md",
+      "LICENSE"
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "category": "public.app-category.productivity",
+      "icon": "assets/icon.icns",
+      "identity": "-",
+      "minimumSystemVersion": "13.0"
+    },
+    "artifactName": "ThreeThings-${version}-mac-${arch}.${ext}"
   },
   "devDependencies": {
-    "electron": "^37.2.6",
-    "electron-builder": "^26.0.12"
+    "electron": "44.2.0",
+    "electron-builder": "^26.0.12",
+    "playwright": "1.58.2"
   }
 }

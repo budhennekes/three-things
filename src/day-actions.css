@@ -1,0 +1,14 @@
+/* A small Today-only action shares the date line; no new toolbar or dialog. */
+.period-meta { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:4px 8px; margin:6px 0 15px; }
+.date-navigation { display:flex; align-items:center; gap:3px; min-height:22px; }
+.date-navigation button { width:20px; min-height:22px; padding:0; font-size:18px; color:var(--muted); -webkit-app-region:no-drag; }
+.date-navigation button:hover { color:var(--text); }
+#date { white-space:nowrap; }
+#back-today { font-size:11px; padding:2px 0; min-height:22px; color:var(--muted); text-decoration:underline; text-underline-offset:3px; -webkit-app-region:no-drag; }
+#date { margin:0; }
+#day-actions { flex:none; font-size:11px; line-height:1.5; color:var(--muted); -webkit-app-region:no-drag; }
+#day-actions button { padding:2px 0; min-height:22px; font-size:11px; text-decoration:underline; text-underline-offset:3px; }
+#day-actions button:hover { color:var(--text); }
+#day-actions button:disabled { cursor:wait; }
+#undo-clear-today { color:var(--text); margin-left:5px; }
+:root[data-mode='compact'] .period-meta { display:none; }

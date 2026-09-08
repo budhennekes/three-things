@@ -1,0 +1,21 @@
+/* Full screen is a native window state, never a fourth task mode. */
+:root[data-fullscreen='true'] main { width:min(760px,100%); margin-inline:auto; padding:clamp(32px,7vh,90px) 32px 48px; }
+:root[data-fullscreen='true'] .periods { gap:32px; }
+:root[data-fullscreen='true'] .periods button { font-size:38px; }
+:root[data-fullscreen='true'] .period-meta { margin:14px 0 24px; }
+:root[data-fullscreen='true'] #date,:root[data-fullscreen='true'] #day-actions,:root[data-fullscreen='true'] #day-actions button { font-size:12px; }
+:root[data-fullscreen='true'] .priority { padding:22px 0; align-items:flex-start; }
+:root[data-fullscreen='true'] .priority > .number { height:44px; font-size:14px; }
+:root[data-fullscreen='true'] #priorities textarea,:root[data-fullscreen='true'] #priorities .ink { font-size:clamp(26px,2.4vw,34px); line-height:1.45; }
+:root[data-fullscreen='true'] .priority > .check-wrap { margin-top:7px; }
+:root[data-fullscreen='true'] #finish { margin-top:24px; padding-top:24px; }
+:root[data-fullscreen='true'] #finish-title { font-size:28px; }
+:root[data-fullscreen='true'] #finish-count { font-size:12px; }
+:root[data-fullscreen='true'] #one-more,:root[data-fullscreen='true'] .extra-row textarea { font-size:16px; }
+:root[data-fullscreen='true'][data-mode='focus'] main { width:min(900px,100%); padding-top:clamp(48px,18vh,180px); }
+:root[data-fullscreen='true'][data-mode='focus'] #priorities textarea,:root[data-fullscreen='true'][data-mode='focus'] #priorities .ink { font-size:clamp(30px,3.6vw,50px); line-height:1.35; }
+:root[data-fullscreen='true'][data-mode='focus'] .priority { padding-block:32px; }
+:root[data-fullscreen='true'][data-mode='focus'] .priority > .number { height:66px; }
+:root[data-fullscreen='true'][data-mode='focus'] .completion-label { font-size:14px; }
+:root[data-fullscreen='true'] .app { background-attachment:fixed; }
+@media(max-height:650px) { :root[data-fullscreen='true'] main,:root[data-fullscreen='true'][data-mode='focus'] main { padding-top:24px; } }

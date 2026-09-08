@@ -1,6 +1,8 @@
 const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('threeThings', {
-  load: scope => ipcRenderer.invoke('priorities:load', scope),
+  load: (scope, day = null) => ipcRenderer.invoke('priorities:load', scope, day),
+  clearToday: key => ipcRenderer.invoke('today:clear', key),
+  undoClearToday: key => ipcRenderer.invoke('today:undo', key),
   export: () => ipcRenderer.invoke('priorities:export'),
   onExport: callback => ipcRenderer.on('export:requested', () => callback()),
   save: payload => ipcRenderer.invoke('priorities:save', payload),
@@ -9,6 +11,7 @@ contextBridge.exposeInMainWorld('threeThings', {
   onPause: callback => ipcRenderer.on('view:paused', () => callback()),
   pin: value => ipcRenderer.invoke('window:pin', value),
   mode: value => ipcRenderer.invoke('window:mode', value),
+  fullscreen: value => ipcRenderer.invoke('window:fullscreen', value),
   motion: value => ipcRenderer.invoke('window:reduced-motion', value),
   onSkin: callback => ipcRenderer.on('appearance:changed', (_event, value) => callback(value)),
   onView: callback => ipcRenderer.on('view:changed', (_event, value) => callback(value)),
