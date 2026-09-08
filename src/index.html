@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Three Things</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="quiet.css">
+  <link rel="stylesheet" href="materials.css">
+  <link rel="stylesheet" href="completion.css">
+</head>
+<body>
+  <div class="app">
+    <header class="titlebar" title="Drag to move">
+      <div class="window-actions"><button id="help-toggle" type="button" aria-label="How to use Three Things" aria-expanded="false" aria-controls="quick-tip" title="How to use Three Things">?</button><button id="focus-toggle" type="button" aria-pressed="false" title="Show one priority at a time">Focus</button><button id="compact-toggle" type="button" title="Make a small horizontal window">Compact</button><button class="settings-trigger" type="button" aria-label="Settings" title="Settings" aria-haspopup="menu">⚙</button></div>
+    </header>
+    <main>
+      <button id="compact-period" type="button" title="Switch period: Today → This week → This month" hidden>Today</button>
+      <div id="compact-tools" hidden><button class="settings-trigger" type="button" aria-label="Settings" title="Settings" aria-haspopup="menu">⚙</button><button id="expand" type="button" title="Return to the larger window" hidden>Expand</button></div>
+      <div class="periods" role="tablist" aria-label="Priority period">
+        <button id="day-tab" type="button" role="tab" aria-label="Today" aria-selected="true" aria-controls="priority-panel" data-scope="day">today<span aria-hidden="true">.</span></button>
+        <button id="week-tab" type="button" role="tab" aria-label="This week" aria-selected="false" aria-controls="priority-panel" tabindex="-1" data-scope="week">this week<span aria-hidden="true">.</span></button>
+        <button id="month-tab" type="button" role="tab" aria-label="This month" aria-selected="false" aria-controls="priority-panel" tabindex="-1" data-scope="month">this month<span aria-hidden="true">.</span></button>
+      </div>
+      <p class="period-date" id="date"></p>
+      <section id="priority-panel" role="tabpanel" aria-labelledby="day-tab">
+        <ol id="priorities" role="list" aria-label="Today's three priorities"></ol>
+      </section>
+      <nav id="focus-navigation" aria-label="Priority navigation" hidden><span id="all-complete" hidden>All three complete</span><button id="next-unfinished" type="button" hidden>Next unfinished</button><button type="button" id="previous" aria-label="Previous priority">‹</button><p id="position" aria-live="polite">1 / 3</p><button type="button" id="next" aria-label="Next priority">›</button></nav>
+      <aside id="quick-tip" aria-label="Quick tip" hidden><p>Three priorities for today, this week, or this month.</p><p>Click a line to write. Use the checkbox to mark it done. Switch periods above. Changes save automatically.</p><button id="tip-dismiss" type="button">Got it</button></aside>
+      <p id="view-notice" role="status" hidden></p>
+      <div id="error" role="alert" hidden>
+        <p id="error-text"></p>
+        <button type="button" id="retry">Try again</button>
+      </div>
+      <p id="save-state" class="sr-only" role="status">Opening…</p>
+      <p id="progress-text" class="sr-only" aria-live="polite"></p>
+    </main>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>

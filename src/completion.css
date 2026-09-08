@@ -1,0 +1,15 @@
+/* Explicit completion, without adding circular markers. */
+.priority > .number { display:grid; place-items:center; flex-shrink:0; width:30px; height:30px; color:var(--muted); font:.6875rem ui-monospace,'SFMono-Regular',monospace; }
+.check-wrap { display:flex; align-items:center; justify-content:center; padding:6px; gap:8px; cursor:pointer; -webkit-app-region:no-drag; }
+.check-wrap input { width:18px; height:18px; flex-shrink:0; border:1px solid var(--muted); border-radius:3px; }
+.check-wrap input:checked { border-color:var(--peach); }
+.check-wrap input:disabled { opacity:.45; }
+.check-wrap .check-icon { left:7px; top:7px; }
+.check-wrap input:not(:checked) ~ .check-icon { opacity:0; }
+.check-wrap .completion-label { display:none; white-space:nowrap; font-size:.75rem; }
+:root[data-mode='focus'] .priority { flex-wrap:wrap; gap:10px 16px; }
+:root[data-mode='focus'] .priority .text-wrap { flex-basis:calc(100% - 46px); }
+:root[data-mode='focus'] .check-wrap { width:auto; margin-left:40px; justify-content:flex-start; }
+:root[data-mode='focus'] .completion-label { display:inline; }
+#focus-navigation #next-unfinished { width:auto; padding:0 8px; font:inherit; font-size:.6875rem; margin-right:auto; text-decoration:underline; text-underline-offset:3px; }
+#all-complete { font-size:.6875rem; color:var(--muted); margin-right:auto; }

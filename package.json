@@ -1,0 +1,26 @@
+{
+  "name": "three-things",
+  "productName": "Three Things",
+  "version": "0.8.0",
+  "private": true,
+  "description": "A small desktop home for today, this week, and this month.",
+  "main": "src/desktop-main.cjs",
+  "author": "Bud Hennekes",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.cjs",
+    "package:mac": "electron-builder --mac zip"
+  },
+  "build": {
+    "appId": "com.budhennekes.threethings",
+    "productName": "Three Things",
+    "asar": true,
+    "files": ["src/**/*", "assets/**/*", "package.json", "README.md", "LICENSE"],
+    "mac": {"target": ["zip"], "category": "public.app-category.productivity", "icon": "assets/icon.icns"}
+  },
+  "devDependencies": {
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12"
+  }
+}

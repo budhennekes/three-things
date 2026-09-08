@@ -1,0 +1,66 @@
+/* Quiet photographic scenes. Native settings never fade text. */
+:root[data-skin='ripples'] { --photo:url('../assets/photos/ripples.webp'); --photo-position:center 50%; }
+:root[data-skin='meadow'] { --photo:url('../assets/photos/meadow.webp'); --photo-position:center 50%; }
+:root[data-skin='plaster'] { --photo:url('../assets/photos/plaster.webp'); --photo-position:center 50%; }
+:root[data-skin='shore'] { --photo:url('../assets/photos/shore.webp'); --photo-position:center 50%; }
+:root[data-skin='ceramic'] { --photo:url('../assets/photos/ceramic.webp'); --photo-position:center 50%; }
+:root[data-skin='meadow'] .app {background-image:linear-gradient(90deg,#19201ac4,#19201ab8),var(--photo);}
+
+.periods { gap:clamp(12px, 3vw, 24px); flex-wrap:wrap; }
+@media(max-width:320px) { .titlebar { height:auto; min-height:62px; padding:30px 10px 0; } .window-actions { flex-wrap:wrap; gap:2px; } }
+.periods button { font-size:clamp(1.35rem, 5.2vw, 2rem); }
+.periods button[aria-selected='true'] { text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:7px; }
+#quick-tip { position:fixed; z-index:10; top:45px; right:16px; width:min(290px, calc(100vw - 32px)); padding:14px 16px; border:1px solid var(--line); border-radius:8px; background:var(--ink); color:var(--muted); box-shadow:0 6px 24px #00000020; font-size:12px; line-height:1.5; -webkit-app-region:no-drag; }
+#quick-tip p { margin:0 0 6px; }
+#tip-dismiss { font-size:12px; padding:4px 0; color:var(--text); text-decoration:underline; text-underline-offset:3px; }
+:root[data-mode='compact'] #quick-tip { display:none; }
+
+:root[data-skin='dunes'] { --photo:url('../assets/photos/dunes.webp'); --photo-position:center 50%; }
+:root[data-skin='horizon'] { --photo:url('../assets/photos/horizon.webp'); --photo-position:center 50%; }
+:root[data-skin='sunroom'] { --photo:url('../assets/photos/sunroom.webp'); --photo-position:center 50%; }
+:root[data-skin='alpine'] { --photo:url('../assets/photos/alpine.webp'); --photo-position:center 50%; }
+:root[data-skin='open-road'] { --photo:url('../assets/photos/open-road.webp'); --photo-position:center 50%; }
+:root[data-skin='snowfield'] { --photo:url('../assets/photos/snowfield.webp'); --photo-position:center 30%; }
+:root[data-skin='cloudbank'] { --photo:url('../assets/photos/cloudbank.webp'); --photo-position:center 50%; }
+:root[data-skin='mist'] { --photo:url('../assets/photos/mist.webp'); --photo-position:center 50%; }
+:root[data-skin='linen'] { --photo:url('../assets/photos/linen.webp'); --photo-position:center 50%; }
+:root:is([data-skin='dunes'],[data-skin='horizon'],[data-skin='sunroom'],[data-skin='alpine'],[data-skin='open-road'],[data-skin='snowfield'],[data-skin='cloudbank'],[data-skin='mist'],[data-skin='linen'],[data-skin='ripples'],[data-skin='meadow'],[data-skin='plaster'],[data-skin='shore'],[data-skin='ceramic']) {color-scheme:only dark;--ink:#242422;--glow:#242422;--text:#fff5df;--muted:#f7eedf;--peach:#fff3d3;--done-text:#f7eedf;--hover:#fff5df;--line:#fff5df30;--focus:#fff3d3aa;--focus-fill:#ffffff08;--error:#fff5df;--retry-border:#fff3d388;--retry-hover:#fff3d315;--warm:#fff8e9;--pencil:url('../assets/pencil-photo.svg');}
+:root:is([data-skin='dunes'],[data-skin='horizon'],[data-skin='sunroom'],[data-skin='alpine'],[data-skin='open-road'],[data-skin='snowfield'],[data-skin='cloudbank'],[data-skin='mist'],[data-skin='linen'],[data-skin='ripples'],[data-skin='meadow'],[data-skin='plaster'],[data-skin='shore'],[data-skin='ceramic']) .app {background-image:linear-gradient(90deg,#171b1bb8,#171b1ba9),var(--photo);background-size:cover;background-position:center,var(--photo-position);background-repeat:no-repeat;}
+:root:is([data-skin='cloudbank'],[data-skin='linen'],[data-skin='snowfield'],[data-skin='mist'],[data-skin='plaster'],[data-skin='shore'],[data-skin='ceramic']) {color-scheme:only light;--ink:#f3f1ed;--glow:#f3f1ed;--text:#252923;--muted:#3c4038;--peach:#3e4938;--done-text:#3c4038;--hover:#252923;--line:#25292330;--focus:#3e493888;--focus-fill:#ffffff35;--error:#6b271f;--retry-border:#3e493888;--retry-hover:#3e493815;--warm:#745433;--pencil:url('../assets/pencil-neutral.svg');}
+:root:is([data-skin='cloudbank'],[data-skin='linen'],[data-skin='snowfield'],[data-skin='mist'],[data-skin='plaster'],[data-skin='shore'],[data-skin='ceramic']) .app {background-image:linear-gradient(90deg,#f8f6f0cc,#f8f6f0b8),var(--photo);}
+
+:root[data-skin='cloudbank'] .app {background-image:linear-gradient(90deg,#fffaf3e8,#fffaf3dc),var(--photo);}
+
+.settings-trigger {font-size:17px!important;line-height:1;width:28px;height:28px;padding:0!important;border-radius:4px;-webkit-app-region:no-drag;color:var(--muted)}
+.settings-trigger:hover{color:var(--text);background:var(--focus-fill)}
+:root[data-mode='compact'] main{grid-template-columns:minmax(0,1fr) auto auto;grid-template-rows:24px 30px;gap:5px 10px;padding:11px 16px}
+:root[data-mode='compact'] #compact-period{grid-row:1;grid-column:1}
+:root[data-mode='compact'] #focus-navigation{grid-row:1;grid-column:2;gap:2px;align-self:center}
+:root[data-mode='compact'] #focus-navigation button{width:24px;height:24px}
+:root[data-mode='compact'] #compact-tools{grid-row:1;grid-column:3;display:flex;align-items:center;gap:8px;-webkit-app-region:no-drag}
+:root[data-mode='compact'] #priority-panel{grid-row:2;grid-column:1/-1}
+
+/* Mini is a persistent horizontal task bar, not native minimization. */
+:root[data-mode='compact'] main { grid-template-columns:minmax(0,1fr) auto; grid-template-rows:22px minmax(38px,auto); gap:5px 12px; padding:10px 16px; }
+:root[data-mode='compact'] #compact-period { grid-column:1; grid-row:1; }
+:root[data-mode='compact'] #compact-tools { grid-column:2; grid-row:1; }
+:root[data-mode='compact'] #priority-panel { grid-column:1/-1; grid-row:2; }
+:root[data-mode='compact'] #priorities { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+:root[data-mode='compact'] .priority { display:grid; grid-template-columns:24px minmax(0,1fr); align-items:center; gap:7px; min-width:0; padding:0; }
+:root[data-mode='compact'] .priority + .priority { border-left:1px solid var(--line); padding-left:14px; }
+:root[data-mode='compact'] .priority > .number { display:none; }
+:root[data-mode='compact'] .check-wrap { width:24px; height:24px; padding:3px; }
+:root[data-mode='compact'] .check-wrap input { width:18px; height:18px; }
+:root[data-mode='compact'] .check-wrap .check-icon { left:4px; top:4px; }
+:root[data-mode='compact'] .text-wrap { min-width:0; }
+:root[data-mode='compact'] .ink { line-height:24px; font-size:.8125rem; }
+:root[data-mode='compact'] #focus-navigation { display:none!important; }
+
+/* Sunny, quiet landscapes. They use generous open ground for the type. */
+:root[data-skin='olive-grove'] { --photo:url('../assets/photos/olive-grove.webp'); --photo-position:center 64%; }
+:root[data-skin='poolside'] { --photo:url('../assets/photos/poolside.webp'); --photo-position:center 50%; }
+:root[data-skin='stillwater'] { --photo:url('../assets/photos/stillwater.webp'); --photo-position:center 50%; }
+:root:is([data-skin='meadow'],[data-skin='olive-grove']) { color-scheme:only light; --text:#183024; --muted:#254332; --peach:#183024; --done-text:#355545; --hover:#183024; --line:#18302430; --focus:#18302488; --focus-fill:#ffffffe0; --error:#6b271f; --retry-border:#18302488; --retry-hover:#18302412; --warm:#745433; --pencil:url('../assets/pencil-neutral.svg'); }
+:root:is([data-skin='meadow'],[data-skin='olive-grove']) .app { background-image:linear-gradient(90deg,#fff9e5c9,#fff9e59e),var(--photo); background-size:cover; background-position:center,var(--photo-position); background-repeat:no-repeat; }
+:root:is([data-skin='poolside'],[data-skin='stillwater']) { color-scheme:only dark; --text:#fff7e7; --muted:#f4ead7; --peach:#fff1c9; --done-text:#e7ddcc; --hover:#fff7e7; --line:#fff7e730; --focus:#fff1c999; --focus-fill:#ffffff0e; --error:#fff7e7; --retry-border:#fff1c988; --retry-hover:#fff1c918; --warm:#fff8e9; --pencil:url('../assets/pencil-photo.svg'); }
+:root:is([data-skin='poolside'],[data-skin='stillwater']) .app { background-image:linear-gradient(90deg,#14201bba,#14201b90),var(--photo); background-size:cover; background-position:center,var(--photo-position); background-repeat:no-repeat; }
