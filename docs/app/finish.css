@@ -1,0 +1,55 @@
+/* A finished list stays a list. Optional work is a quiet continuation. */
+.priority { padding:14px 0; min-height:58px; }
+.titlebar { padding-right:18px; }
+.window-actions { gap:5px; }
+.window-actions button { font-size:12px; }
+.periods { flex-wrap:nowrap; gap:clamp(12px,4vw,22px); }
+.periods button { font-size:clamp(21px,5.2vw,28px); }
+:root[data-mode='focus'] main { padding-bottom:16px; }
+:root[data-mode='focus'] .check-wrap { margin-left:46px; }
+#finish { margin-top:14px; padding-top:14px; border-top:1px solid var(--line); display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:14px 10px; }
+.finish-heading { display:flex; align-items:center; gap:10px; min-width:0; }
+.finish-mark { width:28px; height:26px; flex:none; overflow:visible; }
+.finish-mark path { fill:none; stroke-width:3; stroke-linecap:round; }
+.finish-mark path:nth-child(1) { stroke:#ba8757; }
+.finish-mark path:nth-child(2) { stroke:#8a9e78; }
+.finish-mark path:nth-child(3) { stroke:#819baa; }
+#finish-title { margin:0; font:22px/1.2 Georgia,serif; letter-spacing:-.035em; color:var(--text); }
+#finish-count { margin:4px 0 0; font-size:11px; line-height:1.4; color:var(--muted); }
+#one-more { min-height:30px; padding:4px 0; font-size:12px; color:var(--text); text-decoration:underline; text-underline-offset:4px; white-space:nowrap; -webkit-app-region:no-drag; }
+#one-more:disabled { cursor:default; opacity:.55; }
+#extras { grid-column:1/-1; min-width:0; }
+:root:not([data-mode='compact']) #finish.has-extras .finish-heading { grid-column:1/-1; }
+:root:not([data-mode='compact']) #finish.has-extras #one-more { grid-column:1/-1; justify-self:start; }
+.extra-row { display:grid; grid-template-columns:minmax(0,1fr) 28px; gap:12px; align-items:start; padding:12px 0; border-top:1px solid var(--line); }
+.extra-row textarea { font-size:14px; line-height:1.65; }
+.extra-row input { accent-color:var(--peach); width:18px; height:18px; margin:5px; cursor:pointer; }
+.extra-row.done textarea:not(:focus) { color:var(--done-text); text-decoration:line-through; text-decoration-thickness:1px; }
+.extra-row textarea:focus { scroll-margin-block:20px; }
+.app.celebrate .finish-mark path { stroke-dasharray:30; animation:finish-stroke 650ms cubic-bezier(.2,.7,.2,1) backwards; }
+.app.celebrate .finish-mark path:nth-child(2) { animation-delay:130ms; }
+.app.celebrate .finish-mark path:nth-child(3) { animation-delay:260ms; }
+.app.celebrate #finish-title { animation:finish-arrive 650ms 250ms ease-out backwards; }
+@keyframes finish-stroke { from { stroke-dashoffset:30; } to { stroke-dashoffset:0; } }
+@keyframes finish-arrive { from { opacity:0; transform:translateY(3px); } to { opacity:1; transform:none; } }
+/* Each Mini task owns the flexible column. Its checkbox is explicitly placed. */
+:root[data-mode='compact'] main { grid-template-columns:auto minmax(0,1fr) auto; grid-template-rows:28px 36px; gap:6px 12px; padding:10px 16px 12px; }
+:root[data-mode='compact'] #compact-period { grid-column:1; grid-row:1; font-size:12px; }
+:root[data-mode='compact'] #compact-tools { grid-column:3; grid-row:1; gap:8px; }
+:root[data-mode='compact'] #expand { font-size:12px; min-height:28px; }
+:root[data-mode='compact'] #priority-panel { grid-column:1/-1; grid-row:2; }
+:root[data-mode='compact'] #priorities { gap:14px; }
+:root[data-mode='compact'] .priority { grid-template-columns:minmax(0,1fr) 28px; gap:8px; min-height:36px; }
+:root[data-mode='compact'] .text-wrap { grid-column:1; grid-row:1; width:100%; }
+:root[data-mode='compact'] .check-wrap { grid-column:2; grid-row:1; width:28px; height:28px; padding:5px; }
+:root[data-mode='compact'] .check-wrap .check-icon { left:6px; top:6px; }
+:root[data-mode='compact'] .ink { font-size:14px; line-height:28px; letter-spacing:-.015em; }
+:root[data-mode='compact'] .priority.editing .ink { display:block!important; }
+:root[data-mode='compact'] #finish { grid-column:2; grid-row:1; display:flex; justify-content:center; gap:14px; margin:0; padding:0; border:0; }
+:root[data-mode='compact'] .finish-heading { gap:7px; }
+:root[data-mode='compact'] .finish-mark { width:19px; height:19px; }
+:root[data-mode='compact'] #finish-title { font:12px/1.4 InterVariable,sans-serif; letter-spacing:0; white-space:nowrap; }
+:root[data-mode='compact'] #finish-count, :root[data-mode='compact'] #extras { display:none!important; }
+:root[data-mode='compact'] #one-more { font-size:11px; }
+@media(max-width:345px) { main { padding-inline:18px; } .priority { gap:10px; } .periods { gap:12px; } .periods button { font-size:21px; } #finish-title { font-size:20px; } #finish { column-gap:6px; } }
+@media(prefers-reduced-motion:reduce) { .app.celebrate .finish-mark path,.app.celebrate #finish-title { animation:none; } }

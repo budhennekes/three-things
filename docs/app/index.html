@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" data-skin="meadow" data-mode="list">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Three Things · Mobile</title>
+  <meta name="theme-color" content="#eeecda">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Three Things">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icon-180.png">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="quiet.css">
+  <link rel="stylesheet" href="completion.css">
+  <link rel="stylesheet" href="finish.css">
+  <link rel="stylesheet" href="colors.css">
+  <link rel="stylesheet" href="day-actions.css">
+  <link rel="stylesheet" href="mobile.css">
+</head>
+<body>
+  <div class="app">
+    <header class="titlebar"><div class="mobile-brand"><svg viewBox="0 0 32 28" aria-hidden="true"><path d="M3 5H23"/><path d="M3 14H29"/><path d="M3 23H19"/></svg><span>Three Things</span></div>
+      <div class="window-actions"><button id="exit-fullscreen" type="button" title="Exit full screen · Control–Command–F" hidden>Exit full screen</button><button id="help-toggle" type="button" aria-label="How to use Three Things" aria-expanded="false" aria-controls="quick-tip" title="How to use Three Things">?</button><button id="focus-toggle" type="button" aria-pressed="false" title="Show one priority at a time">Focus</button><button id="compact-toggle" type="button" title="Make a small horizontal window">Compact</button><button class="settings-trigger" type="button" aria-label="Settings" title="Settings" aria-haspopup="dialog">Settings</button></div>
+    </header>
+    <main>
+      <button id="compact-period" type="button" title="Switch period: Today → This week → This month" hidden>Today</button>
+      <div id="compact-tools" hidden><button class="settings-trigger" type="button" aria-label="Settings" title="Settings" aria-haspopup="menu">⚙</button><button id="expand" type="button" title="Return to the larger window" hidden>Expand</button></div>
+      <div class="periods" role="tablist" aria-label="Priority period">
+        <button id="day-tab" type="button" role="tab" aria-label="Today" aria-selected="true" aria-controls="priority-panel" data-scope="day">today<span aria-hidden="true">.</span></button>
+        <button id="week-tab" type="button" role="tab" aria-label="This week" aria-selected="false" aria-controls="priority-panel" tabindex="-1" data-scope="week">this week<span aria-hidden="true">.</span></button>
+        <button id="month-tab" type="button" role="tab" aria-label="This month" aria-selected="false" aria-controls="priority-panel" tabindex="-1" data-scope="month">this month<span aria-hidden="true">.</span></button>
+      </div>
+      <div class="period-meta">
+        <div class="date-navigation"><button id="day-previous" type="button" aria-label="Previous day">‹</button><p class="period-date" id="date" aria-live="polite"></p><button id="day-next" type="button" aria-label="Next day">›</button></div>
+        <button id="back-today" type="button" hidden>Back to today</button>
+        <div id="day-actions" hidden>
+          <button id="clear-today" type="button" title="Clear today's three priorities and extra tasks. Undo is available until you start writing again.">Clear today</button>
+          <span id="clear-status" role="status" hidden><span id="clear-label">Today cleared.</span> <button id="undo-clear-today" type="button" hidden>Undo</button></span>
+        </div>
+      </div>
+      <section id="priority-panel" role="tabpanel" aria-labelledby="day-tab">
+        <ol id="priorities" role="list" aria-label="Today's three priorities"></ol>
+      </section>
+      <nav id="focus-navigation" aria-label="Priority navigation" hidden><span id="all-complete" hidden>All three complete</span><button id="next-unfinished" type="button" hidden>Next unfinished</button><button type="button" id="previous" aria-label="Previous priority">‹</button><p id="position" aria-live="polite">1 / 3</p><button type="button" id="next" aria-label="Next priority">›</button></nav>
+      <section id="finish" aria-label="Completion and optional work" hidden>
+        <div class="finish-heading"><svg class="finish-mark" viewBox="0 0 32 28" aria-hidden="true"><path d="M3 6H23"/><path d="M3 14H29"/><path d="M3 22H19"/></svg><div><p id="finish-title" role="status">Well done.</p><p id="finish-count">3 of 3 complete</p></div></div>
+        <ol id="extras" aria-label="Optional extra tasks" hidden></ol>
+        <button id="one-more" type="button">One more thing</button>
+      </section>
+      <aside id="quick-tip" aria-label="Quick tip" hidden><p>Three priorities for today, this week, or this month.</p><p>Click a line to write. Use the checkbox to mark it done. Switch periods above. Changes save automatically.</p><button id="tip-dismiss" type="button">Got it</button></aside>
+      <p id="view-notice" role="status" hidden></p>
+      <div id="error" role="alert" hidden>
+        <p id="error-text"></p>
+        <button type="button" id="retry">Try again</button>
+      </div>
+      <footer class="mobile-footer"><p id="save-state" role="status">Opening…</p><button id="device-info" type="button">Device-only · No Mac sync</button><p id="offline-state" role="status">Preparing offline use…</p></footer>
+      <p id="progress-text" class="sr-only" aria-live="polite"></p>
+    </main>
+  </div>
+  <dialog id="mobile-settings" aria-labelledby="settings-heading">
+    <div class="settings-heading"><h2 id="settings-heading">Settings</h2><button id="settings-done" type="button" autofocus>Done</button></div>
+    <fieldset><legend>Background</legend><div class="skin-options">
+      <button type="button" data-background="meadow" aria-pressed="true">Meadow</button>
+      <button type="button" data-background="sunroom" aria-pressed="false">Sunroom</button>
+      <button type="button" data-background="cream" aria-pressed="false">Cream</button>
+      <button type="button" data-background="sage" aria-pressed="false">Sage</button>
+      <button type="button" data-background="blue" aria-pressed="false">Blue</button>
+      <button type="button" data-background="graphite" aria-pressed="false">Graphite</button>
+    </div></fieldset>
+    <section class="settings-section"><h3>Keep it on your Home Screen.</h3><p>On iPhone, open this link in Safari. Tap <strong>Share → Add to Home Screen</strong>. Turn on <strong>Open as Web App</strong> if shown, then tap Add.</p><p>Open the Home Screen app once while online. Wait for “Ready offline” before going offline. Use that icon as your main copy.</p></section>
+    <section class="settings-section"><h3>Your priorities stay here.</h3><p>This first mobile version saves only in this browser or Home Screen app. It does not sync with your Mac, another browser, or another device.</p><p>Local saving is not encryption or a backup. Clearing website data can remove your priorities. Keep a downloaded backup before switching browsers or installing a separate copy.</p>
+      <div class="data-actions"><button id="download-backup" type="button">Download backup</button><button id="export-text" type="button">Export readable text</button><button id="restore-backup" type="button">Restore backup</button></div>
+      <input id="backup-file" type="file" accept="application/json,.json" hidden>
+      <p class="settings-small">Restore adds missing dates only. It never replaces an existing list. Backup files contain your task text; keep them private.</p>
+    </section>
+    <p id="settings-notice" role="status"></p>
+    <p class="settings-small">Mobile preview · No account, analytics, or task upload. Static files are hosted by GitHub Pages. <a href="../">About Three Things</a></p>
+  </dialog>
+
+  <script src="model.js"></script>
+  <script src="text-export.js"></script>
+  <script src="bridge.js"></script>
+  <script src="finish.js"></script>
+  <script src="day-actions.js"></script>
+  <script src="day-navigation.js"></script>
+  <script src="renderer.js"></script>
+  <script src="mobile.js"></script>
+</body>
+</html>

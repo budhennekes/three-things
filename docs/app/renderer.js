@@ -231,7 +231,7 @@ function flush() {
         justCompleted = justCompleted || result.justCompleted;
       }
       document.querySelector('#error').hidden = true;
-      document.querySelector('#save-state').textContent = 'Saved on this Mac';
+      document.querySelector('#save-state').textContent = 'Saved on this device';
       refresh();
       if (justCompleted && rows.every(row=>row.done)) finishMoment();
       scheduleNext();
@@ -264,7 +264,7 @@ function adopt(state) {
   revision = 0; savedRevision = 0;
 
   document.querySelector('#error').hidden = true;
-  document.querySelector('#save-state').textContent = 'Saved on this Mac';
+  document.querySelector('#save-state').textContent = 'Saved on this device';
   render(); renderExtras();
 }
 async function switchScope(next) {
@@ -321,7 +321,7 @@ async function start() {
       if (result.cancelled) return;
       if (!result.ok) { showNotice(result.error || 'Could not export. Your priorities are unchanged. Try File → Export Priorities again.'); return; }
       document.querySelector('#save-state').textContent = 'Plain-text export saved.';
-      setTimeout(() => { const status = document.querySelector('#save-state'); if (status.textContent === 'Plain-text export saved.') status.textContent = 'Saved on this Mac'; }, 2000);
+      setTimeout(() => { const status = document.querySelector('#save-state'); if (status.textContent === 'Plain-text export saved.') status.textContent = 'Saved on this device'; }, 2000);
     });
     api.onPause(() => { cancelAdvance(); stopMotion(); });
     api.onSkin(value => { document.documentElement.dataset.skin = value; });

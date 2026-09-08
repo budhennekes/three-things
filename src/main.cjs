@@ -92,7 +92,7 @@ function setMode(next) {
 function priorityState(scope, requestedDay = null) {
   const todayKey = dayKey();
   const key = requestedDay || (scope === 'month' ? dayKey().slice(0, 7) + '-01' : scope === 'week' ? weekKey() : todayKey);
-  return {scope,key,todayKey,rows:store.read(key,scope),...store.readProgress(key,scope),canUndoToday:scope==='day' && store.canUndoToday(key),pin:view.pin,skin,...viewState()};
+  return {scope,key,todayKey,rows:store.read(key,scope),...store.readProgress(key,scope),canUndoClear:store.canUndoClear(key,scope),pin:view.pin,skin,...viewState()};
 }
 function showWindow() {
   if (!win || win.isDestroyed()) return;
@@ -194,23 +194,29 @@ else {
       if (!valid(event) || !['day', 'week', 'month'].includes(scope) || (requestedDay !== null && (scope !== 'day' || typeof requestedDay !== 'string' || !requestedDay))) throw new Error('Not allowed');
       return priorityState(scope, requestedDay);
     });
-    for (const action of ['clear','undo']) ipcMain.handle('today:'+action, (event,key) => {
+    const changePeriod = (event, action, scope, key) => {
       if (!valid(event)) throw new Error('Not allowed');
-      if (key !== dayKey()) return {ok:false,error:'The day changed. Switch periods and try again.'};
+      if (!['day','week','month'].includes(scope)) return {ok:false,error:'Invalid period.'};
+      const current = scope === 'month' ? dayKey().slice(0,7)+'-01' : scope === 'week' ? weekKey() : dayKey();
+      if (key !== current) return {ok:false,error:'The period changed. Switch tabs and try again.'};
       try {
-        if (action === 'clear') store.clearToday(key); else store.undoClearToday(key);
-        return {ok:true,state:priorityState('day')};
+        if (action === 'clear') store.clearPeriod(key,scope); else store.undoClearPeriod(key,scope);
+        return {ok:true,state:priorityState(scope)};
       } catch {
-        return {ok:false,error:action==='clear' ? 'Could not clear today. Your tasks are still here. Try again.' : 'Could not undo. Your cleared tasks are still recoverable. Try again.'};
+        return {ok:false,error:action==='clear' ? 'Could not clear this period. Your tasks are still here. Try again.' : 'Could not undo. Your cleared tasks are still recoverable. Try again.'};
       }
-    });
+    };
+    for (const action of ['clear','undo']) {
+      ipcMain.handle('period:'+action, (event,scope,key)=>changePeriod(event,action,scope,key));
+      ipcMain.handle('today:'+action, (event,key)=>changePeriod(event,action,'day',key));
+    }
     ipcMain.handle('priorities:save', (event, payload) => {
       if (!valid(event)) throw new Error('Not allowed');
       try {
         const before = store.readProgress(payload.key,payload.scope);
         store.save(payload.key, payload.rows, payload.scope, payload.extras);
         const progress = store.readProgress(payload.key,payload.scope);
-        return { ok:true, ...progress, canUndoToday:payload.scope==='day' && store.canUndoToday(payload.key), allComplete:payload.rows.every(row=>row.done), justCompleted:!before.completedOnce && progress.completedOnce };
+        return { ok:true, ...progress, canUndoClear:store.canUndoClear(payload.key,payload.scope), allComplete:payload.rows.every(row=>row.done), justCompleted:!before.completedOnce && progress.completedOnce };
       }
       catch { return { ok: false, error: 'Could not save. Your changes are still here. Try again.' }; }
     });

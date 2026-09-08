@@ -34,7 +34,7 @@ async function changePeriod(action) {
     showError(error.message || 'Could not change this period. Try again.');
   } finally { setBusy(false); }
   if (succeeded) {
-    if (action === 'clear') list.querySelector('textarea')?.focus();
+    if (action === 'clear') document.querySelector('#undo-clear-today')?.focus();
     else document.querySelector('#clear-today').focus();
   }
 }

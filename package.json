@@ -1,7 +1,7 @@
 {
   "name": "three-things",
   "productName": "Three Things",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "private": true,
   "description": "A small desktop home for today, this week, and this month.",
   "main": "src/desktop-main.cjs",
@@ -10,9 +10,11 @@
   "scripts": {
     "start": "electron .",
     "test": "node --test test/*.test.cjs",
-    "test:ui": "node test/ui-pass.cjs && node test/continuation.cjs && node test/clear-today.cjs && node test/day-navigation.cjs",
+    "test:ui": "node test/ui-pass.cjs && node test/continuation.cjs && node test/clear-today.cjs && node test/clear-period.cjs && node test/day-navigation.cjs",
     "package:mac": "electron-builder --mac zip",
-    "test:fullscreen": "node test/fullscreen.cjs"
+    "test:fullscreen": "node test/fullscreen.cjs",
+    "build:mobile": "node mobile/build.cjs",
+    "test:mobile": "node test/mobile.cjs"
   },
   "build": {
     "appId": "com.budhennekes.threethings",

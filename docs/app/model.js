@@ -1,6 +1,5 @@
-const fs = require('node:fs');
-const path = require('node:path');
-
+/* Generated from src/store.cjs by mobile/build.cjs. */
+window.ThreeModel=(()=>{
 function dayKey(date = new Date()) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 }
@@ -64,19 +63,9 @@ function validateData(data) {
   }
   return next;
 }
+
 class Store {
-  constructor(file) {
-    this.file = file;
-    this.data = { version: 6, days: {}, weeks: {}, months: {}, completion: {}, clearUndos:{} };
-    this.legacy = false;
-    try {
-      const parsed = JSON.parse(fs.readFileSync(file, 'utf8'));
-      this.data = validateData(parsed);
-      this.legacy = parsed.version < 6 ? parsed.version : false;
-    } catch (e) {
-      if (e.code !== 'ENOENT') throw new Error('Your saved priorities could not be read. The original file has not been changed.', { cause: e });
-    }
-  }
+constructor(data){this.data=validateData(data||{version:6,days:{},weeks:{},months:{},completion:{},clearUndos:{}});}
   read(key = dayKey(), scope = 'day') {
     validateKey(key, scope);
     return validateDay(this.data[scope === 'month' ? 'months' : scope === 'week' ? 'weeks' : 'days'][key] || emptyDay());
@@ -128,17 +117,8 @@ class Store {
   canUndoToday(key) { return this.canUndoClear(key,'day'); }
   clearToday(key) { return this.clearPeriod(key,'day'); }
   undoClearToday(key) { return this.undoClearPeriod(key,'day'); }
-  commit(next) {
-    fs.mkdirSync(path.dirname(this.file), { recursive: true });
-    if (this.legacy) {
-      try { fs.copyFileSync(this.file, this.file + '.v' + this.legacy + '-backup', fs.constants.COPYFILE_EXCL); }
-      catch (e) { if (e.code !== 'EEXIST') throw e; }
-    }
-    const temp = this.file + '.tmp';
-    fs.writeFileSync(temp, JSON.stringify(next, null, 2), { mode: 0o600 });
-    fs.renameSync(temp, this.file);
-    this.data = next;
-    this.legacy = false;
-  }
+
+commit(next){this.data=validateData(next);}
 }
-module.exports = { Store, dayKey, weekKey, emptyDay, validateDay };
+return {Store,dayKey,weekKey,validateKey};
+})();

@@ -1,6 +1,8 @@
 const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('threeThings', {
   load: (scope, day = null) => ipcRenderer.invoke('priorities:load', scope, day),
+  clearPeriod: (scope, key) => ipcRenderer.invoke('period:clear', scope, key),
+  undoClearPeriod: (scope, key) => ipcRenderer.invoke('period:undo', scope, key),
   clearToday: key => ipcRenderer.invoke('today:clear', key),
   undoClearToday: key => ipcRenderer.invoke('today:undo', key),
   export: () => ipcRenderer.invoke('priorities:export'),

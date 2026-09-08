@@ -4,6 +4,16 @@
 
 Three Things is a small Mac app for choosing three priorities, keeping them in sight, and getting on with your day. There are separate lists for **Today**, **This week**, and **This month**. Three main things in each. No inbox, projects, or streaks to maintain.
 
+## Try it on your phone
+
+**[Open the mobile version →](https://budhennekes.github.io/three-things/app/)**
+
+On iPhone, open the link in Safari, then use **Share → Add to Home Screen**. Open the Home Screen app once online and wait for **Ready offline**. This is an installable web app, not a TestFlight build.
+
+Mobile priorities save in that browser or Home Screen app only. They do not sync with the Mac app. Use **Settings → Download backup** before changing browsers or clearing website data. Restore adds missing dates without replacing an existing list.
+
+The mobile preview includes **Clear today**, **Clear week**, and **Clear month**, each with its own Undo. The current downloadable Mac release (0.10.0) has Clear today; the newer controls are in the current source.
+
 ## Download for Mac
 
 **[Download Three Things 0.10.0 →](https://github.com/budhennekes/three-things/releases/download/v0.10.0/ThreeThings-0.10.0-mac-arm64.zip)**
@@ -30,7 +40,7 @@ So I made Three Things. Choose a few priorities. Keep them close. Give one your 
 - **Room to focus.** Use the green Mac window button or **Control–Command–F** for native full screen. List stays in a readable column; Focus gives one priority more space. Escape exits.
 - **Yesterday and tomorrow, without a calendar.** Use the arrows beside the date to review a previous day or plan ahead. **Back to today** returns you to now. Each date keeps its own tasks and completion status. Tomorrow’s saved plan becomes Today when the date changes.
 - **A quiet finish.** Complete your three for a small “Well done.” Add optional tasks with **One more thing** if you want to keep going.
-- **A fresh start.** **Clear today** clears only the current day. Undo stays available on that day, even after reopening, until you begin a replacement list.
+- **A fresh start.** Use **Clear today**, **Clear week**, or **Clear month** to reset that period in one click. Each clears its three priorities and extras, without changing other periods. Each period keeps its own Undo after reopening, until you begin a replacement list.
 - **Your choice of background.** Plain colors, quiet photographs, and an illustrated meadow. All bundled locally.
 - **Local saving and text export.** No account needed. Use **File → Export Priorities** for a readable copy of your saved days, weeks, months, and extras.
 
