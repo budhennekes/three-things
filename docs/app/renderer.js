@@ -30,6 +30,7 @@ function scheduleNext() {
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const motion = new Map();
 function enterMotion(element, fold = false) {
+  if (window.threeMotion) return window.threeMotion.fadeUp(element);
   motion.get(element)?.cancel();
   if (reducedMotion.matches || document.hidden) return;
   const animation = element.animate([
@@ -265,7 +266,7 @@ function adopt(state) {
 
   document.querySelector('#error').hidden = true;
   document.querySelector('#save-state').textContent = 'Saved on this device';
-  render(); renderExtras();
+  render(); renderExtras(); if (loaded) window.threeMotion.fadeUp(list);
 }
 async function switchScope(next) {
   cancelAdvance();

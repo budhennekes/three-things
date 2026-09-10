@@ -1,0 +1,26 @@
+{
+  "repository": "https://github.com/Subhan-code/Amicro--Micro-transitions-",
+  "commit": "86b55340bfb939b8e93bb53aa46ba017c3449f1c",
+  "sources": {
+    "registry/ui/entrance/fade-up.tsx": {
+      "url": "https://raw.githubusercontent.com/Subhan-code/Amicro--Micro-transitions-/86b55340bfb939b8e93bb53aa46ba017c3449f1c/registry/ui/entrance/fade-up.tsx",
+      "sha256": "8546ead007bc5a9605f871695431e782f23e28dd140af51a4f3a2df5d88086d0"
+    },
+    "registry/ui/entrance/zoom-in.tsx": {
+      "url": "https://raw.githubusercontent.com/Subhan-code/Amicro--Micro-transitions-/86b55340bfb939b8e93bb53aa46ba017c3449f1c/registry/ui/entrance/zoom-in.tsx",
+      "sha256": "59d0c15dabd278f7abffdc5968899656c8337cd3b4738a753d9b0da5a97f2d48"
+    },
+    "registry/lib/presets.ts": {
+      "url": "https://raw.githubusercontent.com/Subhan-code/Amicro--Micro-transitions-/86b55340bfb939b8e93bb53aa46ba017c3449f1c/registry/lib/presets.ts",
+      "sha256": "dbb402a125ecc963857d3c478a505571b2f9a103af292edc803a492972c105fe"
+    },
+    "src/components/AnimatedButton.tsx": {
+      "url": "https://raw.githubusercontent.com/Subhan-code/Amicro--Micro-transitions-/86b55340bfb939b8e93bb53aa46ba017c3449f1c/src/components/AnimatedButton.tsx",
+      "sha256": "157ba89f12ed30409c1340c3d1eb2f5e71a5f8af7886401d012c1654ad904079"
+    },
+    "LICENSE": {
+      "url": "https://raw.githubusercontent.com/Subhan-code/Amicro--Micro-transitions-/86b55340bfb939b8e93bb53aa46ba017c3449f1c/LICENSE",
+      "sha256": "4b2e0abfc3fdc8722545c3772ee7c6fd0bcdbe8af76112af50066689fca4a9c2"
+    }
+  }
+}

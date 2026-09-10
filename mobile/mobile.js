@@ -2,9 +2,9 @@
   const dialog=document.querySelector('#mobile-settings'),notice=document.querySelector('#settings-notice');
   let opener,working=false;
   function reflectSkin(){for(const button of dialog.querySelectorAll('[data-background]'))button.setAttribute('aria-pressed',String(button.dataset.background===mobileBridge.getSkin()));document.querySelector('meta[name="theme-color"]').content=getComputedStyle(document.documentElement).getPropertyValue('--ink').trim();}
-  window.openMobileSettings=()=>{if(dialog.open)return;opener=document.activeElement;reflectSkin();notice.textContent='';dialog.showModal();dialog.scrollTop=0;};
+  window.openMobileSettings=()=>{if(dialog.open)return;opener=document.activeElement;reflectSkin();notice.textContent='';dialog.showModal();dialog.scrollTop=0;threeMotion.zoomIn(dialog);};
   document.querySelector('#settings-done').addEventListener('click',()=>dialog.close());
-  dialog.addEventListener('close',()=>opener?.focus());
+  dialog.addEventListener('close',()=>{threeMotion.cancel(dialog);opener?.focus();});
   document.querySelector('#device-info').addEventListener('click',window.openMobileSettings);
   for(const button of dialog.querySelectorAll('[data-background]'))button.addEventListener('click',async()=>{try{await mobileBridge.setSkin(button.dataset.background);reflectSkin();}catch(error){notice.textContent=error.message;}});
   async function withSaved(action){if(working||!loaded||switching)return;working=true;setBusy(true);try{if(!await flush()){notice.textContent='Your edits are not saved yet. Close Settings and try saving again.';return;}await action();}catch(error){notice.textContent=error.message||'Could not complete that action. Your saved priorities are unchanged.';}finally{setBusy(false);working=false;}}
