@@ -1,4 +1,4 @@
-// Phone-specific continuation UI. Shared renderer and Store still own persistence.
+// Shared optional-work UI. The original three and period persistence stay unchanged.
 function updateFinish() {
   const allDone=rows.every(row=>row.done&&row.text.trim())&&savedAllComplete;
   const finish=document.querySelector('#finish');
@@ -8,9 +8,10 @@ function updateFinish() {
   document.querySelector('#finish-count').textContent=allDone?'3 of 3 complete':'Your original three come first.';
   finish.classList.toggle('has-extras',extras.length>0);
   const add=document.querySelector('#one-more');
-  add.textContent=extras.some(row=>row.text.trim())?'+ Add another':'+ Add an extra';
+  const blank=extras.some(row=>!row.text.trim());
+  add.textContent=blank&&mode==='compact'?'Continue extra':extras.some(row=>row.text.trim())?'+ Add another':'+ Add an extra';
   add.disabled=switching||savedRevision!==revision;
-  add.hidden=(!allDone&&!extras.length)||extras.some(row=>!row.text.trim());
+  add.hidden=(!allDone&&!extras.length)||(blank&&mode!=='compact');
   document.querySelector('#extras').hidden=extras.length===0;
   if(!allDone)appElement.classList.remove('celebrate');
 }
@@ -27,7 +28,7 @@ function renderExtras() {
     cancel.setAttribute('aria-label',`Cancel empty extra ${index+1}`);
     function sync(){li.classList.toggle('done',row.done);check.checked=row.done;check.disabled=!row.text.trim();check.hidden=!row.text.trim();cancel.hidden=!!row.text.trim();}
     text.addEventListener('input',()=>{row.text=text.value;if(!row.text.trim())row.done=false;sync();changed();});
-    text.addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();text.blur();}});
+    text.addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();text.blur();const add=document.querySelector('#one-more');if(!add.hidden)add.scrollIntoView({block:'nearest',behavior:'instant'});}});
     check.addEventListener('change',()=>{row.done=check.checked;sync();changed();});
     cancel.addEventListener('click',()=>{
       if(switching||row.text.trim())return;

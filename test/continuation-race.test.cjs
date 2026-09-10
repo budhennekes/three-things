@@ -1,6 +1,6 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os'),vm=require('node:vm');
 const {Store}=require('../src/store.cjs');
-for(const surface of ['src','mobile'])test(`${surface}: a suspended extra-task opener cannot undo a concurrent Clear today`,async()=>{
+for(const surface of ['src','docs/app'])test(`${surface}: a suspended extra-task opener cannot undo a concurrent Clear today`,async()=>{
  const store=new Store(path.join(fs.mkdtempSync(path.join(os.tmpdir(),'three-race-')),'priorities.json')),key='2026-09-08';
  const original=['Walk','Write','Read'].map(text=>({text,done:true}));store.save(key,original);
  let releaseMode;const modeWait=new Promise(resolve=>{releaseMode=resolve;});

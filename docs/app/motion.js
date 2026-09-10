@@ -52,7 +52,7 @@
     play(element,[{transform:getComputedStyle(element).transform},{transform:'scale(.96)'}],
       {id:'amicro-press',duration:90,easing:ease,fill:'forwards'});
   }
-  const controls='.window-actions button,#mobile-settings button,#one-more,#focus-navigation button,.date-navigation button';
+  const controls='.window-actions button,#mobile-settings button,#one-more,#focus-navigation button,.date-navigation button,#compact-tools button,#compact-period,.cancel-extra';
   document.addEventListener('pointerdown',event=>{
     if (event.button!==0 || !event.isPrimary) return;
     press(event.target.closest(controls),event.pointerId,event.clientX,event.clientY);
@@ -78,5 +78,5 @@
       for (const element of active.keys()) if (element.contains(event.target)) cancel(element);
     }
   });
-  window.threeMotion = {fadeUp,zoomIn,cancel};
+  window.threeMotion = {fadeUp,zoomIn,cancel,stop};
 })();

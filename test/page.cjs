@@ -10,7 +10,7 @@ const fs = require('node:fs');
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     const url = process.env.THREE_THINGS_SITE || 'file://' + path.resolve(__dirname, '../docs/index.html');
-    const download = 'https://github.com/budhennekes/three-things/releases/download/v0.10.0/ThreeThings-0.10.0-mac-arm64.zip';
+    const download = 'https://github.com/budhennekes/three-things/releases/download/v0.11.0/ThreeThings-0.11.0-mac-arm64.zip';
     for (const width of [320, 390, 900, 1400]) {
       await page.setViewportSize({width, height: 1000});
       await page.goto(url);

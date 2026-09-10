@@ -1,7 +1,7 @@
 const {_electron:electron}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),os=require('node:os'),path=require('node:path');
 const root=path.resolve(__dirname,'..'),data=fs.mkdtempSync(path.join(os.tmpdir(),'three-fullscreen-')),out=path.join(root,'evidence-v010');fs.mkdirSync(out,{recursive:true});
 const binary=process.env.THREE_THINGS_BINARY;let app,page;const errors=[];
-async function launch(){app=await electron.launch({...(binary?{executablePath:binary,args:[]}:{args:[root]}),env:{...process.env,THREE_THINGS_TEST_DATA:data}});page=await app.firstWindow();page.on('pageerror',e=>errors.push(e.message));await page.waitForSelector('#priorities textarea',{state:'attached'});}
+async function launch(){app=await electron.launch({...(binary?{executablePath:binary,args:[]}:{args:[root]}),env:{PATH:process.env.PATH,HOME:os.homedir(),TMPDIR:os.tmpdir(),THREE_THINGS_TEST_DATA:data}});page=await app.firstWindow();page.on('pageerror',e=>errors.push(e.message));await page.waitForSelector('#priorities textarea',{state:'attached'});}
 async function mode(m){await page.evaluate(m=>window.threeThings.mode(m),m);}
 async function fullscreen(value){await page.evaluate(v=>window.threeThings.fullscreen(v),value);await page.waitForFunction(v=>document.documentElement.dataset.fullscreen===String(v),value);}
 (async()=>{try{await launch();assert.equal(await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].isFullScreenable()),true,'The green Mac button must support real full screen');

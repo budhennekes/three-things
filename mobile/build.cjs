@@ -5,15 +5,10 @@ fs.mkdirSync(out,{recursive:true});
 const read=f=>fs.readFileSync(path.join(root,f),'utf8');
 const write=(file,content)=>{const p=path.join(out,file);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,content);};
 const replace=(text,a,b)=>{if(!text.includes(a))throw Error('Shared source changed: '+a);return text.replace(a,b);};
-const styles=['style.css','quiet.css','completion.css','finish.css','colors.css','day-actions.css'];
+const styles=['style.css','quiet.css','completion.css','finish.css','colors.css','day-actions.css','experience.css'];
 for(const file of styles)write(file,read('src/'+file).replaceAll('../assets/','assets/'));
-for(const file of ['finish.js','day-actions.js','day-navigation.js','renderer.js']){
- let source=read((file==='finish.js'?'mobile/':'src/')+file).replaceAll('Saved on this Mac','Saved on this device').replace("list.querySelector('textarea')?.focus();","document.querySelector('#undo-clear-today')?.focus();");
- if(file==='renderer.js'){
-  source=replace(source,'text.placeholder = `Priority ${i + 1}`;',"text.placeholder = ['What matters most?','What would move you forward?','What deserves a little time?'][i];");
-  source=replace(source,'function enterMotion(element, fold = false) {','function enterMotion(element, fold = false) {\n  if (window.threeMotion) return window.threeMotion.fadeUp(element);');
-  source=replace(source,'render(); renderExtras();','render(); renderExtras(); if (loaded) window.threeMotion.fadeUp(list);');
- }
+for(const file of ['finish.js','day-actions.js','day-navigation.js','renderer.js','motion.js']){
+ let source=read('src/'+file).replaceAll('Saved on this Mac','Saved on this device').replace("list.querySelector('textarea')?.focus();","document.querySelector('#undo-clear-today')?.focus();");
  write(file,source);
 }
 // Reuse the validated period engine; persistence is provided by IndexedDB transactions.
@@ -23,7 +18,7 @@ const methods=store.slice(store.indexOf('  read(key ='),store.indexOf('  commit(
 write('model.js',`/* Generated from src/store.cjs by mobile/build.cjs. */\nwindow.ThreeModel=(()=>{\n${functions}\nclass Store {\nconstructor(data){this.data=validateData(data||{version:6,days:{},weeks:{},months:{},completion:{},clearUndos:{}});}\n${methods}\ncommit(next){this.data=validateData(next);}\n}\nreturn {Store,dayKey,weekKey,validateKey};\n})();\n`);
 const exportSource=read('src/text-export.cjs');
 write('text-export.js',exportSource.slice(exportSource.indexOf('function formatArchive('),exportSource.indexOf('function writeTextExport(')));
-for(const file of ['bridge.js','mobile.js','mobile.css','motion.js','scenes.css'])write(file,read('mobile/'+file));
+for(const file of ['bridge.js','mobile.js','mobile.css','scenes.css'])write(file,read('mobile/'+file));
 let html=read('src/index.html');
 html=replace(html,'<html lang="en">','<html lang="en" data-skin="summer-meadow" data-mode="list">');
 html=replace(html,'width=device-width, initial-scale=1','width=device-width, initial-scale=1, viewport-fit=cover');
@@ -34,18 +29,16 @@ html=replace(html,'</head>','  <link rel="stylesheet" href="mobile.css">\n  <lin
 html=replace(html,'<header class="titlebar" title="Drag to move">','<header class="titlebar"><div class="mobile-brand"><svg viewBox="0 0 32 28" aria-hidden="true"><path d="M3 5H23"/><path d="M3 14H29"/><path d="M3 23H19"/></svg><span>Three Things</span></div>');
 html=replace(html,'title="Settings" aria-haspopup="menu">⚙','title="Settings" aria-haspopup="dialog">Settings');
 html=replace(html,'<p id="save-state" class="sr-only" role="status">Opening…</p>','<footer class="mobile-footer"><p id="save-state" role="status">Opening…</p><button id="device-info" type="button">Device-only · No Mac sync</button><p id="offline-state" role="status">Preparing offline use…</p></footer>');
-html=replace(html,'  <script src="finish.js"></script>',read('mobile/settings.html')+'\n  <script src="model.js"></script>\n  <script src="text-export.js"></script>\n  <script src="bridge.js"></script>\n  <script src="motion.js"></script>\n  <script src="finish.js"></script>');
+html=replace(html,'  <script src="motion.js"></script>',read('mobile/settings.html')+'\n  <script src="model.js"></script>\n  <script src="text-export.js"></script>\n  <script src="bridge.js"></script>\n  <script src="motion.js"></script>');
 html=replace(html,'</body>','  <script src="mobile.js"></script>\n</body>');
-html=replace(html,'<ol id="extras"','<div class="extras-intro"><h3>A little extra</h3><p>Only if you feel like it.</p></div>\n        <ol id="extras"');
-html=replace(html,'id="finish-title"','id="finish-title" tabindex="-1"');
-html=replace(html,'<svg class="finish-mark" viewBox="0 0 32 28" aria-hidden="true"><path d="M3 6H23"/><path d="M3 14H29"/><path d="M3 22H19"/></svg>','<span class="finish-dots" aria-hidden="true"><i></i><i></i><i></i></span>');
+
 write('index.html',html);
-for(const file of ['inter-latin.woff2','Inter-LICENSE.txt','Heroicons-LICENSE.txt','pencil-neutral.svg','pencil-photo.svg','pencil-graphite.svg','charcoal-grain.png']){
+for(const file of ['inter-latin.woff2','Inter-LICENSE.txt','Heroicons-LICENSE.txt','Amicro-LICENSE.txt','pencil-neutral.svg','pencil-photo.svg','pencil-graphite.svg','charcoal-grain.png']){
  if(!fs.existsSync(path.join(root,'assets',file)))throw Error('Missing asset '+file);
  write('assets/'+file,fs.readFileSync(path.join(root,'assets',file)));
 }
 const sceneAssets=['scenes/summer-meadow.webp','scenes/horizon.webp','scenes/dunes.webp','SCENE-CREDITS.json'];
-for(const file of ['icon-180.png','icon-192.png','icon-512.png','photos/meadow.webp','photos/sunroom.webp','Amicro-LICENSE.txt',...sceneAssets])write('assets/'+file,fs.readFileSync(path.join(root,'mobile/assets',file)));
+for(const file of ['icon-180.png','icon-192.png','icon-512.png','photos/meadow.webp','photos/sunroom.webp',...sceneAssets])write('assets/'+file,fs.readFileSync(path.join(root,'mobile/assets',file)));
 write('manifest.webmanifest',JSON.stringify({id:'./',name:'Three Things',short_name:'Three Things',description:'Three priorities for today, this week, and this month. Saved on this device.',start_url:'./',scope:'./',display:'standalone',background_color:'#eeecda',theme_color:'#eeecda',icons:[{src:'assets/icon-192.png',sizes:'192x192',type:'image/png',purpose:'any'},{src:'assets/icon-512.png',sizes:'512x512',type:'image/png',purpose:'any'}]},null,2)+'\n');
 const files=['index.html',...styles,'finish.js','day-actions.js','day-navigation.js','renderer.js','model.js','text-export.js','bridge.js','mobile.js','motion.js','mobile.css','manifest.webmanifest',...['inter-latin.woff2','Inter-LICENSE.txt','Heroicons-LICENSE.txt','Amicro-LICENSE.txt','pencil-neutral.svg','pencil-photo.svg','pencil-graphite.svg','charcoal-grain.png','icon-180.png','icon-192.png','icon-512.png','photos/meadow.webp','photos/sunroom.webp'].map(f=>'assets/'+f)];
 files.push('scenes.css',...sceneAssets.map(f=>'assets/'+f));

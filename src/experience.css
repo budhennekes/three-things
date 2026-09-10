@@ -1,0 +1,33 @@
+/* Shared Three Things craft. Platform files own sizing, crops and native chrome. */
+:root:not([data-mode='compact']) .priority:has(:checked) textarea:not(:focus){color:var(--text);caret-color:auto;text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--text)}
+:root:not([data-mode='compact']) .priority:has(:checked) .ink{display:none}
+:root[data-mode='compact'] .priority:has(:checked) .ink{color:var(--text)}
+:root[data-mode='compact'] .priority:has(:checked) .ink span{background-image:none;text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--text)}
+.extra-row.done textarea:not(:focus){color:var(--text);text-decoration-thickness:2px}
+#finish .finish-heading{grid-column:1/-1}
+.extras-intro h3{margin:0 0 3px;font-size:13px;font-weight:600;color:var(--text)}
+.extras-intro p{margin:0;font-size:11px;line-height:1.5;color:var(--muted)}
+#finish.has-extras .extras-intro{grid-column:1/-1}
+#finish:not(.has-extras) #one-more{justify-self:end}
+#finish.has-extras #one-more{grid-column:1/-1;justify-self:start}
+.extra-row{grid-template-columns:minmax(0,1fr) 48px}
+.cancel-extra{grid-column:2;min-height:30px;font-size:11px;color:var(--muted);text-decoration:underline;text-underline-offset:4px}
+.finish-dots{display:flex;gap:4px;align-items:center;flex:none;width:32px;height:26px}
+.finish-dots i{display:block;width:7px;height:7px;border-radius:50%;background:#a16d42}
+.finish-dots i:nth-child(2){background:#64815d}.finish-dots i:nth-child(3){background:#68869b}
+/* One save-gated pulse, never a loader or a cascade of success animations. */
+.app.celebrate .check-icon,.app.celebrate .periods button[aria-selected='true'] span,.app.celebrate #finish-title{animation:none}
+.app.celebrate .finish-dots i{animation:apple-pulse-once 900ms ease-in-out 1}
+.app.celebrate .finish-dots i:nth-child(2){animation-delay:150ms}.app.celebrate .finish-dots i:nth-child(3){animation-delay:300ms}
+@keyframes apple-pulse-once{0%{transform:scale(.5);opacity:.3}45%{transform:scale(1);opacity:1}80%{transform:scale(.85);opacity:.8}100%{transform:scale(1);opacity:1}}
+:root[data-mode='compact'] .extras-intro{display:none}
+:root[data-mode='compact'] .finish-dots{gap:3px;width:22px;height:19px}
+:root[data-mode='compact'] .finish-dots i{width:5px;height:5px}
+/* Keep the optional action reachable in short Mac windows and phone landscape. */
+@media(max-height:480px){
+ :root:not([data-mode='compact']) #finish{margin-top:6px;padding-top:6px;row-gap:4px}
+ :root:not([data-mode='compact']) #one-more{min-height:26px}
+ :root:not([data-mode='compact']) .extras-intro h3{margin-bottom:0;font-size:12px}
+ :root:not([data-mode='compact']) .extras-intro p{display:none}
+}
+@media(prefers-reduced-motion:reduce){.app.celebrate .finish-dots i{animation:none}}

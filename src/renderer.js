@@ -28,18 +28,8 @@ function scheduleNext() {
   },550);
 }
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-const motion = new Map();
-function enterMotion(element, fold = false) {
-  motion.get(element)?.cancel();
-  if (reducedMotion.matches || document.hidden) return;
-  const animation = element.animate([
-    { opacity: .65, transform: fold ? 'translateY(-3px) scaleY(.97)' : 'translateY(3px)' },
-    { opacity: 1, transform: 'none' },
-  ], { duration: fold ? 190 : 140, easing: 'cubic-bezier(.2,.7,.2,1)' });
-  motion.set(element, animation);
-  animation.finished.catch(() => {}).finally(() => { if (motion.get(element) === animation) motion.delete(element); });
-}
-function stopMotion() { for (const animation of motion.values()) animation.cancel(); motion.clear(); appElement.classList.remove('celebrate'); }
+function enterMotion(element) { window.threeMotion.fadeUp(element); }
+function stopMotion() { window.threeMotion.stop(); appElement.classList.remove('celebrate'); }
 reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) stopMotion(); void api?.motion(reducedMotion.matches); });
 document.addEventListener('visibilitychange', () => { if (document.hidden) { stopMotion(); cancelAdvance(); } });
 async function focusPriority(index) {
@@ -92,7 +82,7 @@ function render() {
     const textWrap = document.createElement('div'); textWrap.className = 'text-wrap';
     const text = document.createElement('textarea');
     text.name = `priority-${i + 1}`; text.rows = 1; text.maxLength = 240;
-    text.value = row.text; text.placeholder = `Priority ${i + 1}`;
+    text.value = row.text; text.placeholder = ['What matters most?','What would move you forward?','What deserves a little time?'][i];
     text.setAttribute('aria-label', `Priority ${i + 1}`);
     // Completion records status, not edit permission. A completed line can still be corrected.
     text.spellcheck = true;
@@ -176,6 +166,7 @@ function applyView(state) {
   else if (previous === 'list' && mode === 'focus') focusedIndex = Math.max(0, rows.findIndex(row => !row.done));
   document.documentElement.dataset.folding = String(!!state.folding);
   applyModeLayout();
+  updateFinish();
   if (previous !== mode && state.animate) enterMotion(document.querySelector('main'), true);
 }
 function showNotice(message) {
@@ -265,7 +256,7 @@ function adopt(state) {
 
   document.querySelector('#error').hidden = true;
   document.querySelector('#save-state').textContent = 'Saved on this Mac';
-  render(); renderExtras();
+  render(); renderExtras(); if (loaded) enterMotion(list);
 }
 async function switchScope(next) {
   cancelAdvance();

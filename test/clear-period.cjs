@@ -10,7 +10,7 @@ const store=new Store(file);for(const [scope,key]of periods)store.save(key,rows,
 let app,page;const errors=[];
 async function launch(){
  const binary=process.env.THREE_THINGS_BINARY;
- app=await electron.launch({...(binary?{executablePath:binary,args:[]}:{args:[root]}),env:{...process.env,THREE_THINGS_TEST_DATA:data}});
+ app=await electron.launch({...(binary?{executablePath:binary,args:[]}:{args:[root]}),env:{PATH:process.env.PATH,HOME:os.homedir(),TMPDIR:os.tmpdir(),THREE_THINGS_TEST_DATA:data}});
  page=await app.firstWindow();await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].hide());
  page.on('pageerror',e=>errors.push(e.message));await page.waitForSelector('#priorities textarea',{state:'attached'});
  await page.emulateMedia({reducedMotion:'reduce'});

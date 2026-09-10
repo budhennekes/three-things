@@ -28,19 +28,8 @@ function scheduleNext() {
   },550);
 }
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-const motion = new Map();
-function enterMotion(element, fold = false) {
-  if (window.threeMotion) return window.threeMotion.fadeUp(element);
-  motion.get(element)?.cancel();
-  if (reducedMotion.matches || document.hidden) return;
-  const animation = element.animate([
-    { opacity: .65, transform: fold ? 'translateY(-3px) scaleY(.97)' : 'translateY(3px)' },
-    { opacity: 1, transform: 'none' },
-  ], { duration: fold ? 190 : 140, easing: 'cubic-bezier(.2,.7,.2,1)' });
-  motion.set(element, animation);
-  animation.finished.catch(() => {}).finally(() => { if (motion.get(element) === animation) motion.delete(element); });
-}
-function stopMotion() { for (const animation of motion.values()) animation.cancel(); motion.clear(); appElement.classList.remove('celebrate'); }
+function enterMotion(element) { window.threeMotion.fadeUp(element); }
+function stopMotion() { window.threeMotion.stop(); appElement.classList.remove('celebrate'); }
 reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) stopMotion(); void api?.motion(reducedMotion.matches); });
 document.addEventListener('visibilitychange', () => { if (document.hidden) { stopMotion(); cancelAdvance(); } });
 async function focusPriority(index) {
@@ -177,6 +166,7 @@ function applyView(state) {
   else if (previous === 'list' && mode === 'focus') focusedIndex = Math.max(0, rows.findIndex(row => !row.done));
   document.documentElement.dataset.folding = String(!!state.folding);
   applyModeLayout();
+  updateFinish();
   if (previous !== mode && state.animate) enterMotion(document.querySelector('main'), true);
 }
 function showNotice(message) {
@@ -266,7 +256,7 @@ function adopt(state) {
 
   document.querySelector('#error').hidden = true;
   document.querySelector('#save-state').textContent = 'Saved on this device';
-  render(); renderExtras(); if (loaded) window.threeMotion.fadeUp(list);
+  render(); renderExtras(); if (loaded) enterMotion(list);
 }
 async function switchScope(next) {
   cancelAdvance();

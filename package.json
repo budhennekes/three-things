@@ -1,7 +1,7 @@
 {
   "name": "three-things",
   "productName": "Three Things",
-  "version": "0.10.1",
+  "version": "0.11.0",
   "private": true,
   "description": "A small desktop home for today, this week, and this month.",
   "main": "src/desktop-main.cjs",
@@ -16,7 +16,8 @@
     "build:mobile": "node mobile/build.cjs",
     "test:mobile": "node test/mobile.cjs",
     "test:mobile-motion": "node test/mobile-motion.cjs",
-    "test:mobile-polish": "node test/mobile-polish.cjs"
+    "test:mobile-polish": "node test/mobile-polish.cjs",
+    "test:desktop-polish": "node test/desktop-polish.cjs"
   },
   "build": {
     "appId": "com.budhennekes.threethings",

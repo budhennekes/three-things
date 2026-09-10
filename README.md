@@ -12,17 +12,17 @@ On iPhone, open the link in Safari, then use **Share → Add to Home Screen**. O
 
 Mobile priorities save in that browser or Home Screen app only. They do not sync with the Mac app. Use **Settings → Download backup** before changing browsers or clearing website data. Restore adds missing dates without replacing an existing list.
 
-The mobile preview includes **Clear today**, **Clear week**, and **Clear month**, each with its own Undo. The current downloadable Mac release (0.10.0) has Clear today; the newer controls are in the current source.
+Both versions include **Clear today**, **Clear week**, and **Clear month**, each with its own Undo. Mac and mobile share completion styling, optional extras, writing prompts, and applicable motion. They still save priorities separately.
 
 ## Download for Mac
 
-**[Download Three Things 0.10.0 →](https://github.com/budhennekes/three-things/releases/download/v0.10.0/ThreeThings-0.10.0-mac-arm64.zip)**
+**[Download Three Things 0.11.0 →](https://github.com/budhennekes/three-things/releases/download/v0.11.0/ThreeThings-0.11.0-mac-arm64.zip)**
 
 Free, open source, and built for **Apple Silicon Macs (M1 or later), macOS 13 or later**. This download does not support Intel Macs, Windows, or Linux.
 
 **Early release:** This build is ad-hoc signed, not signed with an Apple Developer ID or notarized by Apple. macOS may block the first launch. Read the opening instructions below before downloading.
 
-[See the app](https://budhennekes.github.io/three-things/) · [Release notes and checksum](https://github.com/budhennekes/three-things/releases/tag/v0.10.0)
+[See the app](https://budhennekes.github.io/three-things/) · [Release notes and checksum](https://github.com/budhennekes/three-things/releases/tag/v0.11.0)
 
 ![Three Things in full-screen Focus, with sample priorities](docs/images/focus.webp)
 
@@ -39,7 +39,7 @@ So I made Three Things. Choose a few priorities. Keep them close. Give one your 
 - **List, Focus, and Compact.** See all three, give one task the screen, or keep a slim three-task bar nearby.
 - **Room to focus.** Use the green Mac window button or **Control–Command–F** for native full screen. List stays in a readable column; Focus gives one priority more space. Escape exits.
 - **Yesterday and tomorrow, without a calendar.** Use the arrows beside the date to review a previous day or plan ahead. **Back to today** returns you to now. Each date keeps its own tasks and completion status. Tomorrow’s saved plan becomes Today when the date changes.
-- **A quiet finish.** Complete your three for a small “Well done.” Add optional tasks with **One more thing** if you want to keep going.
+- **A quiet finish.** Complete your three for a small “Well done.” and a brief three-dot pulse after saving. **A little extra** offers Add an extra, Add another, and Cancel for a blank entry. Your original three stay primary. Reduce Motion keeps success still.
 - **A fresh start.** Use **Clear today**, **Clear week**, or **Clear month** to reset that period in one click. Each clears its three priorities and extras, without changing other periods. Each period keeps its own Undo after reopening, until you begin a replacement list.
 - **Your choice of background.** Plain colors, quiet photographs, and an illustrated meadow. All bundled locally.
 - **Local saving and text export.** No account needed. Use **File → Export Priorities** for a readable copy of your saved days, weeks, months, and extras.
@@ -76,6 +76,12 @@ npm run package:mac
 ```
 
 UI tests use synthetic, isolated data. `test:fullscreen` changes native macOS Spaces; run it when the desktop is free. The Apple Silicon ZIP is created in `dist/`. Packaging uses an ad-hoc signature and does not notarize the app.
+
+### One experience across Mac and mobile
+
+Make applicable UI, motion, copy, and material improvements on both platforms. Shared behavior lives in `src/motion.js`, `src/finish.js`, `src/renderer.js`, and `src/experience.css`. The mobile build consumes these files; do not create separate implementations. Platform CSS owns phone touch targets and safe areas, native Mac window sizing, and appropriate image crops. Keep the Mac Settings menu native; its presentation is owned by macOS, not the mobile dialog animation.
+
+After shared edits, rebuild mobile and run `npm test`, `npm run test:desktop-polish`, `npm run test:ui`, and the mobile motion, polish, and persistence suites. `shared-experience.test.cjs` fails if the generated phone motion, extras, or completion styles drift. Test the actual packaged Mac executable with `THREE_THINGS_BINARY` and temporary data before updating an installed app.
 
 ## Credits and license
 
