@@ -1,0 +1,17 @@
+/* Portrait-led scenes: the image stays fixed while optional tasks scroll. */
+:root[data-skin='summer-meadow']{color-scheme:only light;--ink:#e6eccd;--text:#0b1407;--muted:#0b1407;--peach:#0b1407;--done-text:#0b1407;--hover:#0b1407;--line:#19271635;--focus:#192716aa;--focus-fill:#ffffffe0;--error:#572817;--retry-border:#19271688;--retry-hover:#19271615;--warm:#50622e;--scene:url('assets/scenes/summer-meadow.webp');--scene-shade:linear-gradient(#f5f7df40 60%,#f5f7df70)}
+:root[data-skin='horizon']{--scene:url('assets/scenes/horizon.webp');--scene-shade:linear-gradient(#09182099,#09182080)}
+:root[data-skin='dunes']{--scene:url('assets/scenes/dunes.webp');--scene-shade:linear-gradient(#1d150ead 48%,#1d150e55 75%)}
+:root:is([data-skin='horizon'],[data-skin='dunes']){--ink:#222a2a;--text:#fff8eb;--muted:#fff8eb;--peach:#fff8eb;--done-text:#fff8eb;--line:#fff8eb44;--focus-fill:#14201bee}
+:root:is([data-skin='summer-meadow'],[data-skin='horizon'],[data-skin='dunes']) .app{background:transparent}
+:root:is([data-skin='summer-meadow'],[data-skin='horizon'],[data-skin='dunes']) .app::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:var(--scene-shade),var(--scene);background-size:cover;background-position:center;background-repeat:no-repeat}
+.scene-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.scene-options button{min-width:0;padding:0 0 10px;border:1px solid var(--line);border-radius:8px;overflow:hidden;text-align:left;font-size:12px;line-height:1.4}
+.scene-options img{display:block;width:100%;height:132px;object-fit:cover;margin-bottom:9px}
+.scene-options span{display:block;padding:0 8px}
+.scene-options button[aria-pressed='true']{outline:2px solid var(--text);outline-offset:2px;font-weight:650}
+.scene-options button[aria-pressed='true'] span::after{content:' ✓'}
+.background-alternatives{margin-top:22px;font-size:12px;color:var(--muted)}
+.background-alternatives summary{padding-block:12px;min-height:44px;cursor:pointer}
+.background-alternatives .skin-options{margin-top:10px}
+@media(max-width:345px){.scene-options{gap:8px}.scene-options img{height:110px}.scene-options span{padding-inline:5px;font-size:11px}}

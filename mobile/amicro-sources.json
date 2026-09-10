@@ -21,6 +21,10 @@
     "LICENSE": {
       "url": "https://raw.githubusercontent.com/Subhan-code/Amicro--Micro-transitions-/86b55340bfb939b8e93bb53aa46ba017c3449f1c/LICENSE",
       "sha256": "4b2e0abfc3fdc8722545c3772ee7c6fd0bcdbe8af76112af50066689fca4a9c2"
+    },
+    "registry/ui/loading/apple-pulse-dots.tsx": {
+      "url": "https://raw.githubusercontent.com/Subhan-code/Amicro--Micro-transitions-/86b55340bfb939b8e93bb53aa46ba017c3449f1c/registry/ui/loading/apple-pulse-dots.tsx",
+      "sha256": "56f242301f27d0095b7ce0b92285c479da79ee897781c77b58de5738769a4f6f"
     }
   }
 }

@@ -15,7 +15,8 @@
     "test:fullscreen": "node test/fullscreen.cjs",
     "build:mobile": "node mobile/build.cjs",
     "test:mobile": "node test/mobile.cjs",
-    "test:mobile-motion": "node test/mobile-motion.cjs"
+    "test:mobile-motion": "node test/mobile-motion.cjs",
+    "test:mobile-polish": "node test/mobile-polish.cjs"
   },
   "build": {
     "appId": "com.budhennekes.threethings",

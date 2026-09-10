@@ -63,7 +63,8 @@ const out=path.resolve(__dirname,'../evidence-mobile');fs.mkdirSync(out,{recursi
   await other.locator('#priorities textarea').first().fill('Unsaved second-tab draft');await other.waitForSelector('#error:not([hidden])');
   assert.match(await other.locator('#error-text').textContent(),/another tab/);await other.close();
   await page.locator('.titlebar .settings-trigger').tap();await page.waitForSelector('#mobile-settings[open]');
-  for(const skin of ['sunroom','cream','sage','blue','graphite','meadow']){await page.locator(`[data-background="${skin}"]`).tap();await page.waitForFunction(s=>document.documentElement.dataset.skin===s,skin);}
+  await page.locator('.background-alternatives summary').tap();
+  for(const skin of ['sunroom','cream','sage','blue','graphite','meadow','summer-meadow','horizon','dunes']){await page.locator(`[data-background="${skin}"]`).tap();await page.waitForFunction(s=>document.documentElement.dataset.skin===s,skin);}
   await page.screenshot({path:path.join(out,name+'-settings.png')});
   const downloaded=page.waitForEvent('download');await page.locator('#download-backup').tap();const backup=await downloaded;const backupText=fs.readFileSync(await backup.path(),'utf8');
   const data=JSON.parse(backupText);assert.equal(data.format,'three-things-mobile');assert(Object.keys(data.archive.days).length>=2);

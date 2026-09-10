@@ -1,0 +1,38 @@
+[
+  {
+    "name": "summer-meadow",
+    "source": "illustrations/summer-meadow.webp",
+    "source_sha256": "1a6e375ba98abf1e6df0df94f0d9dd3f7f490fc21d873335d98334f20960bb15",
+    "bundled_sha256": "c87b0c8dd49ad9d5cb072c163088bc91d3dcac1c483de41498ff8f9648718e4b",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "bytes": 297928,
+    "credit": "Original AI-generated Three Things illustration; not a film asset."
+  },
+  {
+    "name": "horizon",
+    "source": "photos/horizon.webp",
+    "source_sha256": "6e53b89839d0a41d74a1382db91185174a69222c04c6d01d703c6f17aaa3573a",
+    "bundled_sha256": "5d1287f60e1dcda823131ddd201f4c27cec2f4b08a2450827e853c11c155a3eb",
+    "dimensions": [
+      2400,
+      1349
+    ],
+    "bytes": 257306,
+    "credit": "Shaafi Ali \u2014 https://unsplash.com/photos/view-of-calm-sea-XzOq0STXv9s \u2014 Unsplash License https://unsplash.com/license"
+  },
+  {
+    "name": "dunes",
+    "source": "photos/dunes.webp",
+    "source_sha256": "0eb83659df7e2154acb4e372b3825a8ae9a15e086d0d7e67bc3ca55b472fc59b",
+    "bundled_sha256": "af7868d4adf6c4a435eb7aa5834c8b795226e02db189336d59323dbfc57342d5",
+    "dimensions": [
+      1600,
+      2400
+    ],
+    "bytes": 125508,
+    "credit": "Rafael Peier \u2014 https://unsplash.com/photos/dark-sand-dunes-silhouetted-against-a-vibrant-orange-sunset-sky-Q-pKUwOJqVw \u2014 Unsplash License https://unsplash.com/license"
+  }
+]

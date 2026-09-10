@@ -93,7 +93,7 @@ function render() {
     const textWrap = document.createElement('div'); textWrap.className = 'text-wrap';
     const text = document.createElement('textarea');
     text.name = `priority-${i + 1}`; text.rows = 1; text.maxLength = 240;
-    text.value = row.text; text.placeholder = `Priority ${i + 1}`;
+    text.value = row.text; text.placeholder = ['What matters most?','What would move you forward?','What deserves a little time?'][i];
     text.setAttribute('aria-label', `Priority ${i + 1}`);
     // Completion records status, not edit permission. A completed line can still be corrected.
     text.spellcheck = true;

@@ -1,6 +1,6 @@
 # Amicro motion in Three Things Mobile
 
-Three browser-native adaptations of [Amicro](https://github.com/Subhan-code/Amicro--Micro-transitions-) by Syed Subhan Uddin. Source commit: `86b55340bfb939b8e93bb53aa46ba017c3449f1c`. Exact source URLs and SHA-256 hashes are in `amicro-sources.json`. The original MIT notice is preserved in `assets/Amicro-LICENSE.txt` and bundled in the offline app.
+Browser-native adaptations of [Amicro](https://github.com/Subhan-code/Amicro--Micro-transitions-) by Syed Subhan Uddin. Source commit: `86b55340bfb939b8e93bb53aa46ba017c3449f1c`. Exact source URLs and SHA-256 hashes are in `amicro-sources.json`. The original MIT notice is preserved in `assets/Amicro-LICENSE.txt` and bundled in the offline app.
 
 ## Selected effects
 
@@ -11,6 +11,10 @@ Three browser-native adaptations of [Amicro](https://github.com/Subhan-code/Amic
 Implementation: `motion.js`, using the Web Animations API. No React, Tailwind, Motion runtime, CLI execution, external script, or network service is needed. This is an adaptation, not installation of the React components unchanged.
 
 All added motion is finite and honors Reduce Motion. Task storage, appearance options, desktop behavior, and existing save-gated completion celebrations are unchanged. Mobile build hooks fail if their expected shared renderer anchors change.
+
+## Completion pulse
+
+Apple Pulse (`registry/ui/loading/apple-pulse-dots.tsx`) supplies the three-dot scale/opacity motif. Mobile uses one 900 ms pulse per dot, staggered by 150 ms, after the third priority saves successfully. It settles at full size, replaces the old completion flourish, and never loops or replays on wording edits or reload. Reduce Motion keeps static dots. The original app icon stays unchanged.
 
 ## Verification
 

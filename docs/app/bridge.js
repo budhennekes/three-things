@@ -3,8 +3,8 @@
   'use strict';
   const {Store,dayKey,weekKey,validateKey}=window.ThreeModel;
   const DB='three-things-mobile-v1', observed=new Map(), listeners={};
-  let connection, activeIdentity, currentMode='list', skin='meadow';
-  const choices=['meadow','sunroom','cream','sage','blue','graphite'];
+  let connection, activeIdentity, currentMode='list', skin='summer-meadow';
+  const choices=['summer-meadow','horizon','dunes','meadow','sunroom','cream','sage','blue','graphite'];
   try {const saved=localStorage.getItem('three-things-mobile-skin');if(choices.includes(saved))skin=saved;}catch{}
   document.documentElement.dataset.skin=skin;
   const view=()=>({mode:currentMode,skin,fullScreen:false,backdrop:'opaque',pin:false});

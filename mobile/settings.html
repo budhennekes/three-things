@@ -1,13 +1,17 @@
   <dialog id="mobile-settings" aria-labelledby="settings-heading">
     <div class="settings-heading"><h2 id="settings-heading">Settings</h2><button id="settings-done" type="button" autofocus>Done</button></div>
-    <fieldset><legend>Background</legend><div class="skin-options">
-      <button type="button" data-background="meadow" aria-pressed="true">Meadow</button>
+    <fieldset><legend>Choose a scene</legend><div class="scene-options">
+      <button type="button" data-background="summer-meadow" aria-pressed="true"><img src="assets/scenes/summer-meadow.webp" alt="" width="160" height="220"><span>Summer Meadow</span></button>
+      <button type="button" data-background="horizon" aria-pressed="false"><img src="assets/scenes/horizon.webp" alt="" width="160" height="220"><span>Horizon</span></button>
+      <button type="button" data-background="dunes" aria-pressed="false"><img src="assets/scenes/dunes.webp" alt="" width="160" height="220"><span>Dunes</span></button>
+    </div><details class="background-alternatives"><summary>Simple &amp; previous backgrounds</summary><div class="skin-options">
+      <button type="button" data-background="meadow" aria-pressed="false">Meadow</button>
       <button type="button" data-background="sunroom" aria-pressed="false">Sunroom</button>
       <button type="button" data-background="cream" aria-pressed="false">Cream</button>
       <button type="button" data-background="sage" aria-pressed="false">Sage</button>
       <button type="button" data-background="blue" aria-pressed="false">Blue</button>
       <button type="button" data-background="graphite" aria-pressed="false">Graphite</button>
-    </div></fieldset>
+    </div></details></fieldset>
     <section class="settings-section"><h3>Keep it on your Home Screen.</h3><p>On iPhone, open this link in Safari. Tap <strong>Share → Add to Home Screen</strong>. Turn on <strong>Open as Web App</strong> if shown, then tap Add.</p><p>Open the Home Screen app once while online. Wait for “Ready offline” before going offline. Use that icon as your main copy.</p></section>
     <section class="settings-section"><h3>Your priorities stay here.</h3><p>This first mobile version saves only in this browser or Home Screen app. It does not sync with your Mac, another browser, or another device.</p><p>Local saving is not encryption or a backup. Clearing website data can remove your priorities. Keep a downloaded backup before switching browsers or installing a separate copy.</p>
       <div class="data-actions"><button id="download-backup" type="button">Download backup</button><button id="export-text" type="button">Export readable text</button><button id="restore-backup" type="button">Restore backup</button></div>
